@@ -7,38 +7,43 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1 class="page-header">Thể loại
+                        <h1 class="page-header">Sản phẩm
                             <small>Danh sách</small>
                         </h1>
                     </div>
                     <!-- /.col-lg-12 -->
-                    <!-- @if(session('thongbao'))
+                    @if(session('thongbao'))
                         <div class="alert alert-success">
                             {{session('thongbao')}}
                         </div>
-                    @endif -->
+                    @endif
                     <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                         <thead>
                             <tr align="center">
                                 <th>Số TT</th>
+                                <th>Hình</th>
                                 <th>Mã sản phẩm </th>
                                 <th>Tên sản phẩm</th>
-                                <th>Hình</th>
                                 <th>Loại sản phẩm</th>
                                 <th>Delete</th>
                                 <th>Edit</th>
                             </tr>
                         </thead>
                         <tbody>
+                            {{$stt=1}}
+                            @foreach($sanpham as $item)
                             <tr class="even gradeC" align="center">
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td class="center"><i class="fa fa-trash-o  fa-fw"></i><a href="admin/theloai/xoa/"> Delete</a></td>
-                                <td class="center"><i class="fa fa-pencil fa-fw"></i> <a href="admin/theloai/sua/">Edit</a></td>
+                                <td>{{$stt}}</td>
+                                <td>
+                                    <img src="upload/img/{{$item->hinh}}" width="50px" height="50px" alt="">
+                                </td>
+                                <td>{{$item->masanpham}}</td>
+                                <td>{{$item->tensanpham}}</td>
+                                <td>{{$item->loaisanpham}}</td>
+                                <td class="center"><i class="fa fa-trash-o  fa-fw"></i><a href="admin/sanpham/xoa/{{$item->masanpham}}"> Delete</a></td>
+                                <td class="center"><i class="fa fa-pencil fa-fw"></i> <a href="admin/sanpham/sua/{{$item->masanpham}}">Edit</a></td>
                             </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\ChucVu;
+use App\Luong;
+use App\NhanVien;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class NhanVienController extends Controller
 {
@@ -13,7 +17,8 @@ class NhanVienController extends Controller
      */
     public function index()
     {
-        //
+        $nhanvien=DB::table('nhanvien')->join('chucvu','chucvu','=','machucvu')->get();
+        return view('admin.nhanvien.danhsach',['nhanvien'=>$nhanvien]);
     }
 
     /**
@@ -23,7 +28,9 @@ class NhanVienController extends Controller
      */
     public function create()
     {
-        //
+        $luong=Luong::all();
+        $chucvu=ChucVu::all();
+        return view('admin.nhanvien.them',['luong'=>$luong,'chucvu'=>$chucvu]);
     }
 
     /**
@@ -34,7 +41,71 @@ class NhanVienController extends Controller
      */
     public function store(Request $request)
     {
-        //
+       // dd($request);
+       $this->validate($request,
+       [
+         'manhanvien'=>'required|min:5|max:50|unique:nhanvien',
+         'tennhanvien'=>'required|min:5|max:50',
+         'diachi'=>'required|min:5|max:100',
+         'sodienthoai'=>'required|min:10|max:12|unique:nhanvien',
+         'email'=>'required|unique:nhanvien',
+         'ngaysinh'=>'required',
+         'username'=>'required|unique:nhanvien|min:5|max:50',
+         'password'=>'required|min:10|max:20',
+         'hinhanh'=>'required'
+       ],
+       [
+        'manhanvien.required'=>'Mã nhân viên không được để trống',
+        'manhanvien.min'=>'Mã nhân viên không bé hơn 5 kí tự và lớn hơn 50 kí tự',
+        'manhanvien.max'=>'Mã nhân viên không bé hơn 5 kí tự và lớn hơn 50 kí tự',
+        'manhanvien.unique'=>'Mã nhân viên không được trùng',
+        'tennhanvien.required'=>'Tên nhân viên không được để trống',
+        'tennhanvien.min'=>'Tên nhân viên không được bé hơn 5 kí tự và lớn hơn 50 kí tự',
+        'tennhanvien.max'=>'Tên nhân viên không được bé hơn 5 kí tự và lớn hơn 50 kí tự',
+        'diachi.required'=>'Địa chỉ không được để trống',
+        'diachi.min'=>'Địa chỉ không được bé hơn 5 kí tự và lớn hơn 100 kí tự',
+        'diachi.max'=>'Địa chỉ không được bé hơn 5 kí tự và lớn hơn 100 kí tự',
+        'sodienthoai.required'=>'Số điện thoại không được để trống',
+        'sodienthoai.min'=>'Số điện thoại không bé hơn 10 kí tự và lớn hơn 12 kí tự',
+        'sodienthoai.max'=>'Số điện thoại không bé hơn 10 kí tự và lớn hơn 12 kí tự',
+        'sodienthoai.unique'=>'Số điện thoại không được trùng',
+        'email.required'=>'Email không được để trống',
+        'email.unique'=>'Email không được trùng',
+        'ngaysinh.required'=>'Ngày sinh không được để trống',
+        'username.required'=>'Username không được để trống',
+        'username.min'=>'Username không bé hơn 5 kí tự và lớn hơn 50 kí tự',
+        'username.max'=>'Username không bé hơn 5 kí tự và lớn hơn 50 kí tự',
+        'username.unique'=>'Username không được trùng',
+        'password.required'=>'Password không được để trống',
+        'password.min'=>'Password không được bé hơn 10 kí tự và lớn hơn 20 kí tự',
+        'password.max'=>'Password không được bé hơn 10 kí tự và lớn hơn 20 kí tự',
+        'hinhanh.required'=>'Hình ảnh không được bỏ trống'
+       ]);
+       $nhanvien=new NhanVien();
+       $nhanvien->manhanvien=$request->manhanvien;
+       $nhanvien->tennhanvien=$request->tennhanvien;
+       $nhanvien->gioitinh=$request->gioitinh;
+       $nhanvien->diachi=$request->diachi;
+       $nhanvien->ngaysinh=$request->ngaysinh;
+       $nhanvien->sodienthoai=$request->sodienthoai;
+       $nhanvien->email=$request->email;
+       $nhanvien->chucvu=$request->chucvu;
+       $nhanvien->ngayvaolam=$request->ngayvaolam;
+       $nhanvien->maluong=$request->maluong;
+       $nhanvien->username=$request->username;
+       $nhanvien->password=$request->password;
+       if($request->hasFile('hinhanh'))
+       {
+        $file=$request->file('hinhanh');
+        $name=$file->getClientOriginalName();
+        $hinh=time()."_".$name;
+        $file->move("upload/img",$hinh);
+        $nhanvien->hinhanh=$hinh;
+        }else{
+            $nhanvien->hinhanh="";
+        }
+        $nhanvien->save();
+        return redirect('admin/nhanvien/them')->with('thongbao','Thêm thành công một nhân viên mới');
     }
 
     /**
@@ -56,7 +127,12 @@ class NhanVienController extends Controller
      */
     public function edit($id)
     {
-        //
+        $nhanvien =DB::table('chucvu')->join('nhanvien','machucvu','=','chucvu')
+        ->join('luong','maluong','mamucluong')
+        ->where('manhanvien','=',$id)->get();
+        $luong=Luong::all();
+        $chucvu=ChucVu::all();
+        return view('admin.nhanvien.sua',['nhanvien'=>$nhanvien,'chucvu'=>$chucvu,'luong'=>$luong]);
     }
 
     /**
@@ -68,7 +144,64 @@ class NhanVienController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request,
+       [
+         'tennhanvien'=>'required|min:5|max:50',
+         'diachi'=>'required|min:5|max:100',
+         'sodienthoai'=>'required|min:10|max:12',
+         'email'=>'required',
+         'ngaysinh'=>'required',
+         'username'=>'required|min:5|max:50',
+         'password'=>'required|min:10|max:20',
+       ],
+       [
+        'tennhanvien.required'=>'Tên nhân viên không được để trống',
+        'tennhanvien.min'=>'Tên nhân viên không được bé hơn 5 kí tự và lớn hơn 50 kí tự',
+        'tennhanvien.max'=>'Tên nhân viên không được bé hơn 5 kí tự và lớn hơn 50 kí tự',
+        'diachi.required'=>'Địa chỉ không được để trống',
+        'diachi.min'=>'Địa chỉ không được bé hơn 5 kí tự và lớn hơn 100 kí tự',
+        'diachi.max'=>'Địa chỉ không được bé hơn 5 kí tự và lớn hơn 100 kí tự',
+        'sodienthoai.required'=>'Số điện thoại không được để trống',
+        'sodienthoai.min'=>'Số điện thoại không bé hơn 10 kí tự và lớn hơn 12 kí tự',
+        'sodienthoai.max'=>'Số điện thoại không bé hơn 10 kí tự và lớn hơn 12 kí tự',
+        'email.required'=>'Email không được để trống',
+        'ngaysinh.required'=>'Ngày sinh không được để trống',
+        'username.required'=>'Username không được để trống',
+        'username.min'=>'Username không bé hơn 5 kí tự và lớn hơn 50 kí tự',
+        'username.max'=>'Username không bé hơn 5 kí tự và lớn hơn 50 kí tự',
+        'password.required'=>'Password không được để trống',
+        'password.min'=>'Password không được bé hơn 10 kí tự và lớn hơn 20 kí tự',
+        'password.max'=>'Password không được bé hơn 10 kí tự và lớn hơn 20 kí tự',
+       ]);
+       $nv=DB::table('nhanvien')->where('manhanvien','<>',$id)->get();
+       $nhanvien=NhanVien::find($id);
+       $nhanvien->tennhanvien=$request->tennhanvien;
+       $nhanvien->gioitinh=$request->gioitinh;
+       $nhanvien->diachi=$request->diachi;
+       $nhanvien->ngaysinh=$request->ngaysinh;
+       $nhanvien->chucvu=$request->chucvu;
+       $nhanvien->ngayvaolam=$request->ngayvaolam;
+       $nhanvien->maluong=$request->maluong;
+       $nhanvien->password=$request->password;
+       $temp=$this->KiemTra($nv,$request->sodienthoai,$request->email,$request->username);
+       if($temp){
+        $nhanvien->username=$request->username;
+        $nhanvien->email=$request->email;
+        $nhanvien->sodienthoai=$request->sodienthoai;
+       }else{
+            return redirect('admin/nhanvien/sua/'.$id)->with('thongbaoloi','Username hoặc Email hoặc số điện thoại không được trùng');
+       }
+       if($request->hasFile('hinhanh'))
+       {
+        $file=$request->file('hinhanh');
+        $name=$file->getClientOriginalName();
+        $hinh=time()."_".$name;
+        $file->move("upload/img",$hinh);
+        $nhanvien->hinhanh=$hinh;
+        }
+        $nhanvien->save();
+        return redirect('admin/nhanvien/sua/'.$id)->with('thongbao','Sửa thành công một nhân viên mới');
+    
     }
 
     /**
@@ -79,6 +212,16 @@ class NhanVienController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $nhanvien=NhanVien::find($id);
+        $nhanvien->delete();
+        return redirect('admin/nhanvien/danhsach')->with('thongbao','Xóa thành công một nhân viên');
+    }
+
+    public function KiemTra($arr,$sdt,$email,$user){
+        foreach($arr as $t){
+            if($t->sodienthoai==$sdt || $t->email==$email || $t->username==$user)
+                return false;
+        }
+        return true;
     }
 }

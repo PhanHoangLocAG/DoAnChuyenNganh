@@ -34,10 +34,10 @@
                             <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i>Nhân viên<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="admin/tintuc/danhsach">Danh sách nhân viên </a>
+                                    <a href="admin/nhanvien/danhsach">Danh sách nhân viên </a>
                                 </li>
                                 <li>
-                                    <a href="admin/tintuc/them">Thêm nhân viên</a>
+                                    <a href="admin/nhanvien/them">Thêm nhân viên</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
@@ -62,6 +62,33 @@
                             <ul class="nav nav-second-level">
                                 <li>
                                     <a href="admin/khachhang/danhsach">Danh sách khách hàng</a>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+
+                        <!-- Chuc vu -->
+                        <li>
+                            <a href="#"><i class="fa fa-users fa-fw"></i>Chức vụ<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="admin/chucvu/danhsach">Danh sách chức vụ</a>
+                                </li>
+                                <li>
+                                    <a href="admin/chucvu/them">Thêm chức vụ</a>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                        <!-- Luong -->
+                        <li>
+                            <a href="#"><i class="fa fa-users fa-fw"></i>Lương<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="admin/luong/danhsach">Danh sách mức lương</a>
+                                </li>
+                                <li>
+                                    <a href="admin/luong/them">Thêm mức lương</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
