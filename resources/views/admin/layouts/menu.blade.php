@@ -52,6 +52,9 @@
                                     <a href="admin/sanpham/danhsach">Danh sách sản phẩm</a>
                                 </li>
                                 <li>
+                                    <a href="admin/sanpham/discountlist">Sản phẩm giảm giá</a>
+                                </li>
+                                <li>
                                     <a href="admin/sanpham/them">Thêm sản phẩm</a>
                                 </li>
                             </ul>
@@ -89,6 +92,45 @@
                                 </li>
                                 <li>
                                     <a href="admin/luong/them">Thêm mức lương</a>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                            <!-- Mau sac -->
+                        <li>
+                            <a href="#"><i class="fa fa-users fa-fw"></i>Màu sắc<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="admin/mausac/danhsach">Danh sách màu sắc</a>
+                                </li>
+                                <li>
+                                    <a href="admin/mausac/them">Thêm màu sắc</a>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                        <!-- Kich thuoc -->
+                        <li>
+                            <a href="#"><i class="fa fa-users fa-fw"></i>Kích thước<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="admin/kichthuoc/danhsach">Danh sách kích thước</a>
+                                </li>
+                                <li>
+                                    <a href="admin/kichthuoc/them">Thêm kích thước</a>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                        <!-- Hinh -->
+                        <li>
+                            <a href="#"><i class="fa fa-users fa-fw"></i>Hình sản phẩm<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="admin/hinh/danhsach">Danh sách hình ảnh</a>
+                                </li>
+                                <li>
+                                    <a href="admin/hinh/them">Thêm hình</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->

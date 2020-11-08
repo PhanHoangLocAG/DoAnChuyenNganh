@@ -28,21 +28,21 @@
                         }}
                     ]'>
 
+                            @foreach($sanpham as $item)
                             <div class="product-item">
                                 <div class="single-product">
                                     <div class="product-img">
                                         <a href="single-product.html">
-                                            <img class="primary-img" src="assets/images/product/8-1.jpg" alt="Kenne's Product Image">
+                                            <img class="primary-img" src="upload/img/{{$item->hinh}}" height="105" alt="Kenne's Product Image">
                                         </a>
                                         <span class="sticker-2">-10%</span>
                                     </div>
                                     <div class="product-content">
                                         <div class="product-desc_info">
-                                            <span class="manufacture-product">hoodie, jacket</span>
-                                            <h3 class="product-name"><a href="single-product.html">Quibusdam ratione</a>
+                                            <h3 class="product-name"><a href="single-product.html">{{$item->tensanpham}}</a>
                                             </h3>
                                             <div class="price-box">
-                                                <span class="new-price">$46.91</span>
+                                                <span class="new-price">{{number_format($item->giaban,0,"",".")."VND"}}</span>
                                                 <span class="old-price">$50.99</span>
                                             </div>
                                         </div>
@@ -57,35 +57,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="product-item">
-                                <div class="single-product">
-                                    <div class="product-img">
-                                        <a href="single-product.html">
-                                            <img class="primary-img" src="assets/images/product/6-2.jpg" alt="Kenne's Product Image">
-                                        </a>
-                                        <span class="sticker">Sale</span>
-                                    </div>
-                                    <div class="product-content">
-                                        <div class="product-desc_info">
-                                            <span class="manufacture-product">sleeveless, frocks</span>
-                                            <h3 class="product-name"><a href="single-product.html">Quibusdam ratione</a>
-                                            </h3>
-                                            <div class="price-box">
-                                                <span class="new-price">$50.00</span>
-                                                <span class="old-price">$65.00</span>
-                                            </div>
-                                        </div>
-                                        <div class="add-actions">
-                                            <ul>
-                                                <li><a href="wishlist.html" data-toggle="tooltip" data-placement="top" title="Add To Wishlist"><i class="ion-ios-heart-outline"></i></a>
-                                                </li>
-                                                <li><a href="cart.html" data-toggle="tooltip" data-placement="top" title="Add To cart">Add to cart</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            @endforeach
+
                         </div>
                     </div>
                 </div>

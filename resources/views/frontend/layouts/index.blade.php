@@ -43,7 +43,7 @@
     <!-- Main Style CSS (Please use minify version for better website load performance) -->
     <link rel="stylesheet" href="assets/css/style.css">
     <!--<link rel="stylesheet" href="assets/css/style.min.css">-->
-
+    <link rel="stylesheet" href="assets/css/plugins/style_me.css">
 
 </head>
 
@@ -122,7 +122,6 @@
     <script src="assets/js/plugins/jquery.zoom.min.js"></script>
     <!-- Timecircles JS -->
     <script src="assets/js/plugins/timecircles.js"></script>
-
     <!-- Vendor & Plugins JS (Please remove the comment from below vendor.min.js & plugins.min.js for better website load performance and remove js files from avobe) -->
     <!-- 
 <script src="assets/js/vendor/vendor.min.js"></script>

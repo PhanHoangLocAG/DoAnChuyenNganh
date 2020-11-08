@@ -1,3 +1,6 @@
+@extends('frontend.layouts.index')
+
+@section('content')
 <div class="sp-area">
             <div class="container">
                 <div class="sp-nav">
@@ -16,7 +19,7 @@
                                         <img src="assets/images/product/1-1.jpg" alt="Kenne's Product Image">
                                     </div>
                                     <div class="single-slide orange zoom">
-                                        <img src="assets/images/product/1-2.jpg" alt="Kenne's Product Image">
+                                        <img src="upload/img/{{$sanpham[0]->hinh}}" alt="Kenne's Product Image">
                                     </div>
                                     <div class="single-slide brown zoom">
                                         <img src="assets/images/product/2-1.jpg" alt="Kenne's Product Image">
@@ -45,7 +48,7 @@
                                         {"breakpoint":575, "settings": {"slidesToShow": 2}}
                                     ]'>
                                     <div class="single-slide red">
-                                        <img src="assets/images/product/1-1.jpg" alt="Kenne's Product Thumnail">
+                                        <img src="upload/img/{{$sanpham[0]->hinh}}" alt="Kenne's Product Thumnail">
                                     </div>
                                     <div class="single-slide orange">
                                         <img src="assets/images/product/1-2.jpg" alt="Kenne's Product Thumnail">
@@ -68,7 +71,7 @@
                         <div class="col-lg-8">
                             <div class="sp-content">
                                 <div class="sp-heading">
-                                    <h5><a href="#">Tên sản phẩm</a></h5>
+                                    <h5><a href="#">{{$sanpham[0]->tensanpham}}</a></h5>
                                 </div>
                                 <span class="reference">Đánh giá</span>
                                 <div class="rating-box">
@@ -83,9 +86,17 @@
                                 <div class="sp-essential_stuff">
                                     <ul>
                                         <li>Thương hiệu <a href="javascript:void(0)">Buxton</a></li>
-                                        <li>Mã sản phẩm: <a href="javascript:void(0)">Product 16</a></li>
+                                        <li>Mã sản phẩm: <a href="javascript:void(0)">{{$sanpham[0]->masanpham}}</a></li>
                                         <li>Trạng thái: <a href="javascript:void(0)">In Stock</a></li>
-                                        <li>Giá : <a href="javascript:void(0)"><span>$453.35</span></a></li>
+                                        <li>Giá : <a href="javascript:void(0)">
+                                            <span>
+                                                    @if(is_null($sanpham[0]->Money_discount))
+                                                        {{number_format($sanpham[0]->giaban,0,"",".")."VND"}}
+                                                    @else
+                                                        {{number_format($sanpham[0]->Money_discount,0,"",".")."VND"}}
+                                                    @endif
+                                            </span>
+                                        </a></li>
                                     </ul>
                                 </div>
                                 <div class="product-size_box">
@@ -140,18 +151,10 @@
                                         </li>
                                     </ul>
                                 </div>
-                                <div class="kenne-social_link">
-                                    <ul>
-                                        <li class="instagram">
-                                            <a href="https://rss.com" data-toggle="tooltip" target="_blank" title="Instagram">
-                                                <i class="fab fa-instagram"></i>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+@endsection

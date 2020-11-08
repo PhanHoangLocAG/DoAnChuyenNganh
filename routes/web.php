@@ -61,6 +61,18 @@ Route::group(['prefix'=>'admin'],function(){
 
     });
 
+    //Giảm giá sản phẩm
+    Route::group(['prefix'=>'sanpham'],function(){
+        
+        Route::get('discountlist','DiscountController@index');
+        Route::get('discount/{ma}','DiscountController@create');
+        Route::post('discount/{ma}','DiscountController@store');
+        Route::get('deleteDiscount/{ma}','DiscountController@destroy');
+        Route::get('editDiscount/{ma}','DiscountController@edit');
+        Route::post('editDiscount/{ma}','DiscountController@update');
+    });
+
+
     //khach hang
     Route::group(['prefix'=>'khachhang'],function(){
         
@@ -88,6 +100,39 @@ Route::group(['prefix'=>'admin'],function(){
         Route::post('sua/{ma}','LuongController@update');
         Route::get('danhsach','LuongController@index');
     });
+
+    //kich thuoc
+    Route::group(['prefix'=>'kichthuoc'],function(){
+        Route::get('them','KichThuocController@create');
+        Route::post('them','KichThuocController@store');
+        Route::get('xoa/{ma}','KichThuocController@destroy');
+        Route::get('sua/{ma}','KichThuocController@edit');
+        Route::post('sua/{ma}','KichThuocController@update');
+        Route::get('danhsach','KichThuocController@index');
+    });
+
+
+    //Mau sac
+    Route::group(['prefix'=>'mausac'],function(){
+        Route::get('them','MauSacController@create');
+        Route::post('them','MauSacController@store');
+        Route::get('xoa/{ma}','MauSacController@destroy');
+        Route::get('sua/{ma}','MauSacController@edit');
+        Route::post('sua/{ma}','MauSacController@update');
+        Route::get('danhsach','MauSacController@index');
+    });
+
+
+    //Hinh
+    Route::group(['prefix'=>'hinh'],function(){
+        Route::get('them','Controller@create');
+        Route::post('them','Controller@store');
+        Route::get('xoa/{ma}','Controller@destroy');
+        Route::get('sua/{ma}','Controller@edit');
+        Route::post('sua/{ma}','Controller@update');
+        Route::get('danhsach','Controller@index');
+    });
+
 });
 
 
@@ -96,8 +141,19 @@ Route::group(['prefix'=>'frontend'],function(){
         return view('frontend.layouts.index');
     });
 
-    Route::get('trangchu',function(){
-        return view('frontend.sanpham.product');
+    //home
+    Route::get('trangchu','SanPhamController@ShowProduct');
+
+    //register product
+    Route::get('register',function(){
+        return view('frontend.customer.register');
     });
 
+    //login product
+    Route::get('login',function(){
+        return view('frontend.customer.login');
+    });
+
+    //detail product
+    Route::get('detailProduct/{ma}','SanPhamController@show');
 });

@@ -61,7 +61,8 @@ class SanPhamController extends Controller
             'ketnoi'=>'min:5|max:50|required',
             'trongluong'=>'min:5|max:50|required',
             'pin'=>'min:5|max:50|required',
-            'hinhanh'=>'required'
+            'hinhanh'=>'required',
+            'gia'=>'required'
         ],
         [
             'masanpham.unique'=>'Mã sản phẩm không được trùng',
@@ -93,7 +94,8 @@ class SanPhamController extends Controller
             'pin.min'=>'Pin sản phẩm không được bé hơn 5 kí tự và lớn hơn 50 kí tự',
             'pin.max'=>'Pin sản phẩm không được bé hơn 5 kí tự và lớn hơn 50 kí tự',
             'pin.required'=>'Pin sản phẩm không được để trống',
-            'hinhanh.required'=>'Hình sản phẩm không được để trống'
+            'hinhanh.required'=>'Hình sản phẩm không được để trống',
+            'gia.required'=>'Giá sản phẩm không được bỏ trống'
         ]);
         $sanpham=new SanPham();
         $sanpham->masanpham=$request->masanpham;
@@ -106,6 +108,7 @@ class SanPhamController extends Controller
         $sanpham->ketnoi=$request->ketnoi;
         $sanpham->trongluong=$request->trongluong;
         $sanpham->pin=$request->pin;
+        $sanpham->giaban=$request->gia;
         if($request->hasFile('hinhanh')){
             $file=$request->file('hinhanh');
             $name=$file->getClientOriginalName();
@@ -126,9 +129,12 @@ class SanPhamController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+    
     public function show($id)
     {
-        //
+        $sanpham=SanPham::getDetailProduct($id);
+        return view('frontend.sanpham.detailProduct',['sanpham'=>$sanpham]);
     }
 
     /**
@@ -231,5 +237,12 @@ class SanPhamController extends Controller
         return redirect('admin/sanpham/danhsach')->with('thongbao','Xóa thành công một sản phẩm');
     }
 
-    
+    //Show product for customer
+    public function ShowProduct()
+    {
+        $sanpham =SanPham::getdiscount();
+        $new=DB::table('sanpham')->orderBy('created_at','desc')->limit(10)->get();
+
+        return view('frontend.sanpham.product',['sanpham'=>$sanpham,'newProduct'=>$new]);
+    }
 }

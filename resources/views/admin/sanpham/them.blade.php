@@ -5,7 +5,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1 class="page-header">Thể loại
+                        <h1 class="page-header">Sản phẩm
                             <small>Thêm</small>
                         </h1>
                     </div>
@@ -69,6 +69,10 @@
                             <div class="form-group">
                                 <label>Pin</label>
                                 <input type="text" class="form-control" name='pin' placeholder="Nhập thông tin về pin sản phẩm">
+                            </div>
+                            <div class="form-group">
+                                <label>Giá bán</label>
+                                <input type="text" class="form-control" name='gia' placeholder="Nhập giá sản phẩm">
                             </div>
                             <div class="form-group">
                                 <label>Hình ảnh</label>

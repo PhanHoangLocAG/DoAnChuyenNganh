@@ -13,7 +13,7 @@
                                             <a href="wishlist.html"><i class="fas fa-grin-hearts"></i> Yêu thích</a>
                                         </li>
                                         <li>
-                                            <a href="login-register.html"><i class="fas fa-sign-in-alt"></i> Đăng nhập</a>
+                                            <a href="frontend/register"><i class="fas fa-sign-in-alt"></i> Đăng nhập</a>
                                         </li>
                                         <li>
                                             <a href="login-register.html"><i class="fas fa-door-open"></i>  Đăng xuất</a>

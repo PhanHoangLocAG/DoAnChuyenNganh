@@ -7,7 +7,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1 class="page-header">Sản phẩm
+                        <h1 class="page-header">Kích thước
                             <small>Danh sách</small>
                         </h1>
                     </div>
@@ -21,29 +21,21 @@
                         <thead>
                             <tr align="center">
                                 <th>Số TT</th>
-                                <th>Hình</th>
-                                <th>Mã sản phẩm </th>
-                                <th>Tên sản phẩm</th>
-                                <th>Loại sản phẩm</th>
+                                <th>Loại kích thước</th>
+                                <th>Kích thước</th>
                                 <th>Delete</th>
                                 <th>Edit</th>
-                                <th>Discount</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {{$stt=1}}
-                            @foreach($sanpham as $item)
+                           {{ $stt=1}}
+                            @foreach($kichthuoc as $item)
                             <tr class="even gradeC" align="center">
-                                <td>{{$stt++}}</td>
-                                <td>
-                                    <img src="upload/img/{{$item->hinh}}" width="50px" height="50px" alt="">
-                                </td>
-                                <td>{{$item->masanpham}}</td>
-                                <td>{{$item->tensanpham}}</td>
-                                <td>{{$item->loaisanpham}}</td>
-                                <td class="center"><i class="fa fa-trash-o  fa-fw"></i><a href="admin/sanpham/xoa/{{$item->masanpham}}"> Delete</a></td>
-                                <td class="center"><i class="fa fa-pencil fa-fw"></i> <a href="admin/sanpham/sua/{{$item->masanpham}}">Edit</a></td>
-                                <td class="center"><i class="fas fa-percent"></i> <a href="admin/sanpham/discount/{{$item->masanpham}}">Discount</a></td>
+                                <td>{{ $stt++ }}</td>
+                                <td>{{ $item->makichthuoc }}</td>
+                                <td>{{ $item->kichthuoc }}</td>
+                                <td class="center"><i class="fa fa-trash-o  fa-fw"></i><a href="admin/luong/xoa/{{$item->makichthuoc}}"> Delete</a></td>
+                                <td class="center"><i class="fa fa-pencil fa-fw"></i> <a href="admin/luong/sua/{{$item->makichthuoc}}">Edit</a></td>
                             </tr>
                             @endforeach
                         </tbody>

@@ -1,3 +1,4 @@
+
 <div class="contact-main-page">
             <div class="container">
                 <div id="google-map"></div>
@@ -58,3 +59,4 @@
                 </div>
             </div>
         </div>
+@endsection
