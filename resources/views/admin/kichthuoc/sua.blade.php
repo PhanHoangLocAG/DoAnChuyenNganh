@@ -24,15 +24,15 @@
                                 {{session('thongbao')}}
                             </div>
                         @endif
-                        <form action="{{URL::to('admin/luong/sua/'.$luong->mamucluong)}}" method="POST">
+                        <form action="{{URL::to('admin/kichthuoc/sua/'.$kichthuoc->makichthuoc)}}" method="POST">
                             <input type="hidden" name="_token" value="{{csrf_token()}}"/>
                             <div class="form-group">
                                 <label>Loại kích thước</label>
-                                <input type="text" disabled value="{{$luong->mamucluong}}" class="form-control" name='mamucluong' placeholder="Nhập mã mức lương">
+                                <input type="text" disabled value="{{$kichthuoc->makichthuoc}}" class="form-control" name='makichthuoc' >
                             </div>
                             <div class="form-group">
                                 <label>kích thước</label>
-                                <input type="text" value="{{$luong->sotien}}" class="form-control" name='sotien' placeholder="Nhập số tiền">
+                                <input type="text" value="{{$kichthuoc->kichthuoc}}" name="kichthuoc" class="form-control"  >
                             </div>
                             <button type="submit" class="btn btn-default">Sửa</button>
                             <button type="reset" class="btn btn-default">Reset</button>

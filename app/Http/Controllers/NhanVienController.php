@@ -44,15 +44,14 @@ class NhanVienController extends Controller
        // dd($request);
        $this->validate($request,
        [
-         'manhanvien'=>'required|min:5|max:50|unique:nhanvien',
-         'tennhanvien'=>'required|min:5|max:50',
-         'diachi'=>'required|min:5|max:100',
-         'sodienthoai'=>'required|min:10|max:12|unique:nhanvien',
-         'email'=>'required|unique:nhanvien',
-         'ngaysinh'=>'required',
-         'username'=>'required|unique:nhanvien|min:5|max:50',
-         'password'=>'required|min:10|max:20',
-         'hinhanh'=>'required'
+         'manhanvien'=>'bail|required|min:5|max:50|unique:nhanvien',
+         'tennhanvien'=>'bail|required|min:5|max:50',
+         'diachi'=>'bail|required|min:5|max:100',
+         'sodienthoai'=>'bail|required|min:10|max:12|unique:nhanvien',
+         'email'=>'bail|required|unique:nhanvien',
+         'ngaysinh'=>'bail|required',
+         'password'=>'bail|required|min:10|max:20',
+         'hinhanh'=>'bail|required'
        ],
        [
         'manhanvien.required'=>'Mã nhân viên không được để trống',
@@ -81,6 +80,19 @@ class NhanVienController extends Controller
         'password.max'=>'Password không được bé hơn 10 kí tự và lớn hơn 20 kí tự',
         'hinhanh.required'=>'Hình ảnh không được bỏ trống'
        ]);
+       if($this->KiemTraTuoi($request->ngaysinh,$request->ngayvaolam)){
+           
+        return redirect('admin/nhanvien/them')->with('thongbaoloi','Nhân viên phải đủ 18 tuổi trở lên ');   
+       }
+       if($request->passwordconfirm!=""){
+        if($request->password!=$request->passwordconfirm){
+            return redirect('admin/nhanvien/them')->with('thongbaoloi','Mật khẩu xác nhận phải trùng với mật khẩu ');
+        }
+       }else{
+        return redirect('admin/nhanvien/them')->with('thongbaoloi','Mật khẩu xác nhận phải không được bỏ trống');
+
+       }
+
        $nhanvien=new NhanVien();
        $nhanvien->manhanvien=$request->manhanvien;
        $nhanvien->tennhanvien=$request->tennhanvien;
@@ -92,8 +104,7 @@ class NhanVienController extends Controller
        $nhanvien->chucvu=$request->chucvu;
        $nhanvien->ngayvaolam=$request->ngayvaolam;
        $nhanvien->maluong=$request->maluong;
-       $nhanvien->username=$request->username;
-       $nhanvien->password=$request->password;
+       $nhanvien->password=md5($request->password);
        if($request->hasFile('hinhanh'))
        {
         $file=$request->file('hinhanh');
@@ -146,13 +157,12 @@ class NhanVienController extends Controller
     {
         $this->validate($request,
        [
-         'tennhanvien'=>'required|min:5|max:50',
-         'diachi'=>'required|min:5|max:100',
-         'sodienthoai'=>'required|min:10|max:12',
-         'email'=>'required',
-         'ngaysinh'=>'required',
-         'username'=>'required|min:5|max:50',
-         'password'=>'required|min:10|max:20',
+         'tennhanvien'=>'bail|required|min:5|max:50',
+         'diachi'=>'bail|required|min:5|max:100',
+         'sodienthoai'=>'bail|required|min:10|max:12|unique:nhanvien,sodienthoai,'.$id.',manhanvien',
+         'email'=>'bail|required|unique:nhanvien,email,'.$id.',manhanvien',
+         'ngaysinh'=>'bail|required',
+         'password'=>'bail|required|min:10|max:20',
        ],
        [
         'tennhanvien.required'=>'Tên nhân viên không được để trống',
@@ -164,7 +174,9 @@ class NhanVienController extends Controller
         'sodienthoai.required'=>'Số điện thoại không được để trống',
         'sodienthoai.min'=>'Số điện thoại không bé hơn 10 kí tự và lớn hơn 12 kí tự',
         'sodienthoai.max'=>'Số điện thoại không bé hơn 10 kí tự và lớn hơn 12 kí tự',
-        'email.required'=>'Email không được để trống',
+        'sodienthoai.unique'=>'Số điện thoại không được trùng',
+        'email.unique'=>'Email không được để trống',
+        'email.unique'=>'Email không được trùng',
         'ngaysinh.required'=>'Ngày sinh không được để trống',
         'username.required'=>'Username không được để trống',
         'username.min'=>'Username không bé hơn 5 kí tự và lớn hơn 50 kí tự',
@@ -172,6 +184,7 @@ class NhanVienController extends Controller
         'password.required'=>'Password không được để trống',
         'password.min'=>'Password không được bé hơn 10 kí tự và lớn hơn 20 kí tự',
         'password.max'=>'Password không được bé hơn 10 kí tự và lớn hơn 20 kí tự',
+        
        ]);
        $nv=DB::table('nhanvien')->where('manhanvien','<>',$id)->get();
        $nhanvien=NhanVien::find($id);
@@ -183,14 +196,8 @@ class NhanVienController extends Controller
        $nhanvien->ngayvaolam=$request->ngayvaolam;
        $nhanvien->maluong=$request->maluong;
        $nhanvien->password=$request->password;
-       $temp=$this->KiemTra($nv,$request->sodienthoai,$request->email,$request->username);
-       if($temp){
-        $nhanvien->username=$request->username;
-        $nhanvien->email=$request->email;
-        $nhanvien->sodienthoai=$request->sodienthoai;
-       }else{
-            return redirect('admin/nhanvien/sua/'.$id)->with('thongbaoloi','Username hoặc Email hoặc số điện thoại không được trùng');
-       }
+       $nhanvien->email=$request->email;
+       $nhanvien->sodienthoai=$request->sodienthoai;
        if($request->hasFile('hinhanh'))
        {
         $file=$request->file('hinhanh');
@@ -217,11 +224,17 @@ class NhanVienController extends Controller
         return redirect('admin/nhanvien/danhsach')->with('thongbao','Xóa thành công một nhân viên');
     }
 
-    public function KiemTra($arr,$sdt,$email,$user){
+    public function KiemTra($arr,$sdt,$email){
         foreach($arr as $t){
-            if($t->sodienthoai==$sdt || $t->email==$email || $t->username==$user)
+            if($t->sodienthoai==$sdt || $t->email==$email)
                 return false;
         }
         return true;
+    }
+
+    public function KiemTraTuoi($ngaysinh,$ngayvaolam){
+        $ngaydutuoi=strtotime('+18 year',strtotime($ngaysinh));
+        $ngayvaolam=strtotime($ngayvaolam);
+        return $ngayvaolam>=$ngaydutuoi ? false:true;
     }
 }

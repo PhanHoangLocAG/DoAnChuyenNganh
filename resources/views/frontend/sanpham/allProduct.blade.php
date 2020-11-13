@@ -12,12 +12,16 @@
 
 
                     @foreach($sanpham as $item)
+                    <?php
+                        $arr=explode(";",$item->hinh);
+                        $hinh=$arr[0];
+                    ?>
                     <div class="col-lg-4 col-md-4 col-sm-6">
                         <div class="product-item" style="width: 240px;" >
                             <div class="single-product" style="padding: 0px;border: none;">
                                 <div class="product-img">
                                     <a href="frontend/detailProduct/{{$item->masanpham}}">
-                                        <img class="primary-img" src="upload/img/{{$item->hinh}}" height="238px" alt="Kenne's Product Image">
+                                        <img class="primary-img" src="upload/img/{{$hinh}}" height="238px" alt="Kenne's Product Image">
                                     </a>
                                     @if(!is_null($item->discount))
                                     <span class="sticker">
@@ -40,8 +44,12 @@
                                     <div class="product-desc_info">
                                         <h3 class="product-name"><a href="single-product.html">{{$item->tensanpham}}</a></h3>
                                         <div class="price-box">
+                                            @if(isset($item->Money_discount))
                                             <span class="new-price">{{number_format($item->Money_discount,0,"",".")."VND"}}</span>
                                             <span class="old-price">{{number_format($item->giaban,0,"",".")."VND"}}</span>
+                                            @else
+                                            <span class="new-price">{{number_format($item->giaban,0,"",".")."VND"}}</span>
+                                            @endif
                                         </div>
                                         <div class="rating-box">
                                             <ul>

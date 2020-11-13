@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\KhachHangController;
 use App\Http\Controllers\NhanVienController;
 use Illuminate\Support\Facades\Route;
 
@@ -25,7 +26,9 @@ Route::get('login',function(){
 
 Route::group(['prefix'=>'admin'],function(){
 
-
+    
+    Route::get('login','LoginController@create');
+    Route::post('login','LoginController@store');
     //Loại sản phẩm
     Route::group(['prefix'=>'theloai'],function(){
         
@@ -137,17 +140,26 @@ Route::group(['prefix'=>'admin'],function(){
 
 
 Route::group(['prefix'=>'frontend'],function(){
+    
+    
     Route::get('index',function(){
         return view('frontend.layouts.index');
     });
+
+
 
     //home
     Route::get('trangchu','SanPhamController@ShowProduct');
 
     //register product
-    Route::get('register',function(){
-        return view('frontend.customer.register');
-    });
+    Route::get('dangnhap','KhachHangController@formdangnhap');
+    Route::post('dangnhap','KhachHangController@dangnhap');
+    Route::get('dangky','KhachHangController@create');
+    Route::post('dangky','KhachHangController@store');
+    Route::get('edit/{ma}','KhachHangController@edit');
+    // Route::get('register','KhachHangController@create');
+    // Route::get('register','KhachHangController@create');
+
 
     //login product
     Route::get('login',function(){

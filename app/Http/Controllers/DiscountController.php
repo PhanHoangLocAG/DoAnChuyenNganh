@@ -36,16 +36,25 @@ class DiscountController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request,$id)
     {
+        $giamgia=Discount::find($id);
+        if($giamgia==null){
+            $sanpham=SanPham::find($request->masanpham);
+            $discount=new Discount();
+            $discount->masanpham=$request->masanpham;
+            $discount->tensanpham=$request->tensanpham;
+            $discount->discount=$request->giamgia;
+            $discount->hinh=$sanpham->hinh;
+            $discount->Money_discount=$sanpham->giaban-($request->giamgia*$sanpham->giaban/100);
+            $discount->save();
+            return redirect('admin/sanpham/danhsach')->with('thongbao','Giảm giá thành công sản phẩm '.$request->tensanpham);
+        }
         $sanpham=SanPham::find($request->masanpham);
-        $discount=new Discount();
-        $discount->masanpham=$request->masanpham;
-        $discount->tensanpham=$request->tensanpham;
-        $discount->discount=$request->giamgia;
-        $discount->hinh=$sanpham->hinh;
-        $discount->Money_discount=$sanpham->giaban-($request->giamgia*$sanpham->giaban/100);
-        $discount->save();
+        $giamgia->discount=$request->giamgia;
+        $giamgia->hinh=$sanpham->hinh;
+        $giamgia->Money_discount=$sanpham->giaban-($request->giamgia*$sanpham->giaban/100);
+        $giamgia->save();
         return redirect('admin/sanpham/danhsach')->with('thongbao','Giảm giá thành công sản phẩm '.$request->tensanpham);
 
     }

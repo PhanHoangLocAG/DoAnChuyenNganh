@@ -15,6 +15,10 @@ class SanPham extends Model
     public static function getdiscount(){
         return DB::table('sanpham')->leftjoin('discount','sanpham.masanpham','=','discount.masanpham')->select('sanpham.masanpham','sanpham.tensanpham','sanpham.giaban','sanpham.hinh','discount','Money_discount')->get();
     }
+    //san pham moi
+    public static function getNewProduct(){
+        return DB::table('sanpham')->leftjoin('discount','sanpham.masanpham','=','discount.masanpham')->orderByDesc('created_at')->select('sanpham.masanpham','sanpham.tensanpham','sanpham.giaban','sanpham.hinh','sanpham.created_at','discount','Money_discount')->limit(10)->get();
+    }
 
     //get detail product discount
     public static function getDetailProduct($ma){

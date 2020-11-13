@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\MauSac;
 use Illuminate\Http\Request;
 
 class MauSacController extends Controller
@@ -13,7 +14,8 @@ class MauSacController extends Controller
      */
     public function index()
     {
-        //
+        $mausac=MauSac::all();
+        return view('admin.mausac.danhsach',['mausac'=>$mausac]);
     }
 
     /**
@@ -23,7 +25,7 @@ class MauSacController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.mausac.them');
     }
 
     /**
@@ -34,7 +36,22 @@ class MauSacController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,
+        [
+            'mamau'=>'required|unique:mausac',
+            'tenmau'=>'required|unique:mausac'
+        ]
+        ,[
+            'mamau.required'=>'Mã màu không được trống',
+            'mamau.unique'=>'Mã màu không được trùng',
+            'tenmau.required'=>'Tên màu không được trống',
+            'tenmau.unique'=>'Tên màu không được trùng'
+        ]);
+        $mausac=new MauSac();
+        $mausac->mamau=$request->mamau;
+        $mausac->tenmau=$request->tenmau;
+        $mausac->save();
+        return redirect('admin/mausac/them')->with('thongbao','Thêm thành công một màu sắc mới');
     }
 
     /**
@@ -56,7 +73,8 @@ class MauSacController extends Controller
      */
     public function edit($id)
     {
-        //
+        $mausac=MauSac::find($id);
+        return view('admin.mausac.sua',['mausac'=>$mausac]);
     }
 
     /**
@@ -68,7 +86,18 @@ class MauSacController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request,
+        [
+            'tenmau'=>'required|unique:mausac,tenmau,'.$id.',mamau'
+        ]
+        ,[
+            'tenmau.required'=>'Tên màu không được trống',
+            'tenmau.unique'=>'Tên màu không được trùng'
+        ]);
+        $mausac=MauSac::find($id);
+        $mausac->tenmau=$request->tenmau;
+        $mausac->save();
+        return redirect('admin/mausac/sua/'.$id)->with('thongbao','Sửa thành công một màu sắc');
     }
 
     /**
@@ -79,6 +108,8 @@ class MauSacController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $mausac=MauSac::find($id);
+        $mausac->delete();
+        return redirect('admin/mausac/danhsach')->with('thongbao','Xóa thành công một màu sắc');
     }
 }

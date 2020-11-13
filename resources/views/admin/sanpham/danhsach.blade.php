@@ -36,7 +36,11 @@
                             <tr class="even gradeC" align="center">
                                 <td>{{$stt++}}</td>
                                 <td>
-                                    <img src="upload/img/{{$item->hinh}}" width="50px" height="50px" alt="">
+                                    <?php
+                                        $arr=explode(';',$item->hinh);
+                                        $hinh=$arr[0];
+                                    ?>
+                                    <img src="upload/img/{{$hinh}}" width="50px" height="50px" alt="">
                                 </td>
                                 <td>{{$item->masanpham}}</td>
                                 <td>{{$item->tensanpham}}</td>

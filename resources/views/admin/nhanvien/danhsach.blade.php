@@ -25,7 +25,6 @@
                                 <th>Mã nhân viên </th>
                                 <th>Tên nhân viên</th>
                                 <th>Giới tính</th>
-                                <th>Địa chỉ</th>
                                 <th>Số điện thoại</th>
                                 <th>Email</th>
                                 <th>Chức vụ</th>
@@ -50,7 +49,6 @@
                                         {{'Nữ'}}
                                     @endif
                                 </td>
-                                <td>{{$item->diachi}}</td>
                                 <td>{{$item->sodienthoai}}</td>
                                 <td>{{$item->email}}</td>
                                 <td>{{$item->tenchucvu}}</td>

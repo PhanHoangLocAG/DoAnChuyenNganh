@@ -24,7 +24,7 @@
                                 {{session('thongbao')}}
                             </div>
                         @endif
-                        <form action="{{URL::to('admin/luong/them')}}" method="POST">
+                        <form action="{{URL::to('admin/kichthuoc/them')}}" method="POST">
                             <input type="hidden" name="_token" value="{{csrf_token()}}"/>
                             <div class="form-group">
                                 <label>Loại kích thước</label>

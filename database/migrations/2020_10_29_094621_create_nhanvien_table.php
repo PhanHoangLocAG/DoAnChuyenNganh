@@ -25,7 +25,6 @@ class CreateNhanvienTable extends Migration
             $table->date('ngayvaolam');
             $table->string('hinhanh',200);
             $table->string('maluong',200);
-            $table->string('username',200);
             $table->string('password',300);
             $table->timestamps();
         });

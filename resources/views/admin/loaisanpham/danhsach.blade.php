@@ -21,6 +21,7 @@
                         <thead>
                             <tr align="center">
                                 <th>Số TT</th>
+                                <th>Logo</th>
                                 <th>Mã loại </th>
                                 <th>Tên</th>
                                 <th>Nhà sản xuất</th>
@@ -34,6 +35,7 @@
                             @foreach($theloai as $item)
                             <tr class="even gradeC" align="center">
                                 <td>{{ $stt++ }}</td>
+                                <td><img src="upload/img/{{$item->logo}}" width="150px" height="70px" alt=""></td>
                                 <td>{{ $item->maloai }}</td>
                                 <td>{{ $item->tenloai }}</td>
                                 <td>{{ $item->nhasanxuat }}</td>

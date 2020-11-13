@@ -7,22 +7,30 @@
                 <div class="row" style="justify-content: center;">
                     <div class="col-sm-12 col-md-12 col-xs-12 col-lg-6">
                         <!-- Login Form s-->
-                        <form action="#">
-                            <div class="login-form">
+                        @if(count($errors)>0)
+                            <div class="alert alert-danger">
+                                    @foreach($errors->all() as $err)
+                                        {{$err}}<br>
+                                    @endforeach
+                            </div>
+                        @endif
+                        <form action="{{URL::to('frontend/dangnhap')}}" enctype="multipart/form-data" method="post">
+                            <input type="hidden" name="_token" value="{{csrf_token()}}">
+                        <div class="login-form">
                                 <h4 class="login-title">Đăng nhập</h4>
                                 <div class="row">
                                     <div class="col-md-12 col-12">
-                                        <label>Địa chỉ email*</label>
-                                        <input type="email" placeholder="Email Address">
+                                        <label>Địa chỉ email</label>
+                                        <input type="email" name="email" placeholder="Email Address">
                                     </div>
                                     <div class="col-12 mb--20">
                                         <label>Mật khẩu</label>
-                                        <input type="password" placeholder="Password">
+                                        <input type="password" name="password" placeholder="Password">
                                     </div>
                                     <div class="col-md-8">
                                         <div class="check-box">
                                             <input type="checkbox" id="remember_me">
-                                            <label for="remember_me">Nhớ</label>
+                                            <label for="remember_me" >Nhớ</label>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
@@ -34,7 +42,7 @@
                                         <button class="kenne-login_btn">Đăng nhập</button>
                                     </div>
                                     <div class="col-md-12" style="text-align: center;">
-                                        <span>--------</span><a href="frontend/register">Đăng ký</a><span>--------</span>
+                                        <span>--------</span><a href="frontend/dangky">Đăng ký</a><span>--------</span>
                                     </div>
                                 </div>
                             </div>

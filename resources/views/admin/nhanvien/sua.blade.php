@@ -59,12 +59,12 @@
                                 <input type="text" class="form-control" value="{{$nhanvien[0]->sodienthoai}}"  name='sodienthoai' placeholder="Nhập số điện thoại nhân viên">
                             </div>
                             <div class="form-group">
-                                <label>Email</label>
-                                <input type="email" class="form-control" value="{{$nhanvien[0]->email}}" name='email' placeholder="Nhập email nhân viên">
-                            </div>
-                            <div class="form-group">
                                 <label>Ngày sinh</label>
                                 <input type="date" class="form-control" value="{{$nhanvien[0]->ngaysinh}}" name='ngaysinh' >
+                            </div>
+                            <div class="form-group">
+                                <label>Hình ảnh</label>
+                                <input type="file" class="form-control" name='hinhanh'>
                             </div>
                             <button type="submit" class="btn btn-default">Sửa</button>
                             <button type="reset" class="btn btn-default">Reset</button>
@@ -91,16 +91,12 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label>Username:</label>
-                                <input type="text" class="form-control" value="{{$nhanvien[0]->username}}"  name='username' placeholder="Nhập username">
+                                <label>Email</label>
+                                <input type="email" class="form-control" value="{{$nhanvien[0]->email}}" name='email' placeholder="Nhập email nhân viên">
                             </div>
                             <div class="form-group">
                                 <label>Password</label>
                                 <input type="password" class="form-control" value="{{$nhanvien[0]->password}}"  name='password' placeholder="Nhập password">
-                            </div>
-                            <div class="form-group">
-                                <label>Hình ảnh</label>
-                                <input type="file" class="form-control" name='hinhanh'>
                             </div>
                         </div>
                         <form>

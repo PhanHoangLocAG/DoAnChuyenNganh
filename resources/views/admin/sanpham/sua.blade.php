@@ -5,8 +5,8 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1 class="page-header">Thể loại
-                            <small>Thêm</small>
+                        <h1 class="page-header">Sản phẩm
+                            <small>Sửa</small>
                         </h1>
                     </div>
                     <!-- /.col-lg-12 -->
@@ -80,8 +80,32 @@
                                 <input type="text" class="form-control" value="{{$sanpham->pin}}" name='pin' placeholder="Nhập thông tin về pin sản phẩm">
                             </div>
                             <div class="form-group">
+                                <label>Màu sắc</label>
+                                    <select class="form-control" name="mausac" >
+                                        @foreach($mausac as $item)
+                                            @if($item->mamau==$sanpham->mausac)
+                                            <option value="{{$item->mamau}}">{{$item->tenmau}}</option>
+                                            @else
+                                            <option value="{{$item->mamau}}">{{$item->tenmau}}</option>
+                                            @endif
+                                        @endforeach
+                                    </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Kích thước</label>
+                                    <select class="form-control" name="kichthuoc" >
+                                        @foreach($kichthuoc as $item)
+                                            @if($item->makichthuoc==$sanpham->kichthuoc)
+                                            <option value="{{$item->makichthuoc}}" checked>{{$item->kichthuoc}}</option>
+                                            @else
+                                            <option value="{{$item->makichthuoc}}">{{$item->kichthuoc}}</option>
+                                            @endif
+                                        @endforeach
+                                    </select>
+                            </div>
+                            <div class="form-group">
                                 <label>Hình ảnh</label>
-                                <input type="file" class="form-control" value="public/upload/img/{{$sanpham->hinh}}" name='hinhanh' >
+                                <input type="file" class="form-control"  name='hinhanh' >
                             </div>
                             <button type="submit" class="btn btn-default">Sửa</button>
                             <button type="reset" class="btn btn-default">Reset</button>

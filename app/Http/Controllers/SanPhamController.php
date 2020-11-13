@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\KichThuoc;
+use App\MauSac;
 use App\SanPham;
 use App\TheLoai;
 use Illuminate\Http\Request;
@@ -14,14 +16,12 @@ class SanPhamController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function KiemTraTrung($arr,$check){
-        foreach($arr as $item){
-            if($item->tensanpham==$check)
-               {
-                   return true;
-               }
+    public function KiemTraTrung($list,$name,$size,$color){
+        foreach($list as $item){
+            if($item->tensanpham==$name && $item->mausac==$color && $item->kichthuoc==$size)
+                return true;
         }
-        return false;
+        return false;       
     }
 
 
@@ -39,7 +39,9 @@ class SanPhamController extends Controller
     public function create()
     {
         $loaisanpham=TheLoai::all();
-        return view('admin.sanpham.them',['loaisanpham'=>$loaisanpham]);
+        $mausac=MauSac::all();
+        $kichthuoc=KichThuoc::all();
+        return view('admin.sanpham.them',['loaisanpham'=>$loaisanpham,'mausac'=>$mausac,'kichthuoc'=>$kichthuoc]);
     }
 
     /**
@@ -49,27 +51,30 @@ class SanPhamController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    {   
+        
         $this->validate($request,
         [
-            'masanpham'=>'unique:sanpham|min:5|max:50|required',
-            'tensanpham'=>'unique:sanpham|min:5|max:50|required',
-            'bonho'=>'min:5|max:50|required',
-            'hedieuhanh'=>'min:5|max:50|required',
-            'manhinh'=>'min:5|max:50|required',
-            'camera'=>'min:5|max:50|required',
-            'ketnoi'=>'min:5|max:50|required',
-            'trongluong'=>'min:5|max:50|required',
-            'pin'=>'min:5|max:50|required',
-            'hinhanh'=>'required',
-            'gia'=>'required'
+            'masanpham'=>'bail|unique:sanpham|min:5|max:50|required',
+            'tensanpham'=>'bail|min:5|max:50|required',
+            'bonho'=>'bail|min:5|max:50|required',
+            'hedieuhanh'=>'bail|min:5|max:50|required',
+            'manhinh'=>'bail|min:5|max:50|required',
+            'camera'=>'bail|min:5|max:50|required',
+            'ketnoi'=>'bail|min:5|max:50|required',
+            'trongluong'=>'bail|min:5|max:50|required',
+            'pin'=>'bail|min:5|max:50|required',
+            'hinhanh'=>'bail|required',
+            'kichthuoc'=>'bail|required',
+            'mausac'=>'bail|required',
+            'gia'=>'bail|required',
+            'soluong'=>'bail|required'
         ],
         [
             'masanpham.unique'=>'Mã sản phẩm không được trùng',
             'masanpham.min'=>'Mã sản phẩm không được bé hơn 5 kí tự và lớn hơn 50 kí tự',
             'masanpham.max'=>'Mã sản phẩm không được bé hơn 5 kí tự và lớn hơn 50 kí tự',
             'masanpham.required'=>'Mã sản phẩm không được để trống',
-            'tensanpham.unique'=>'Tên sản phẩm không được trùng',
             'tensanpham.min'=>'Tên sản phẩm không được bé hơn 5 kí tự và lớn hơn 50 kí tự',
             'tensanpham.max'=>'Tên sản phẩm không được bé hơn 5 kí tự và lớn hơn 50 kí tự',
             'tensanpham.required'=>'Tên sản phẩm không được để trống',
@@ -95,8 +100,21 @@ class SanPhamController extends Controller
             'pin.max'=>'Pin sản phẩm không được bé hơn 5 kí tự và lớn hơn 50 kí tự',
             'pin.required'=>'Pin sản phẩm không được để trống',
             'hinhanh.required'=>'Hình sản phẩm không được để trống',
-            'gia.required'=>'Giá sản phẩm không được bỏ trống'
+            'mausac.required'=>'Màu sắc sản phẩm không được để trống',
+            'kichthuoc.required'=>'Kích thước sản phẩm không được để trống',
+            'gia.required'=>'Giá sản phẩm không được bỏ trống',
+            'soluong.required'=>'Số lượng sản phẩm không được bỏ trống'
         ]);
+        $temp=DB::table('sanpham')->get();
+        $kiemtra=$this->KiemTraTrung($temp,$request->tensanpham,$request->kichthuoc,$request->mausac);
+        if($kiemtra){
+            return redirect('admin/sanpham/them')->with('thongbaoloi','Kiểm tra lại màu sắc và kích thước và tên sản phẩm nó đã tồn tại');
+        }
+        if($request->soluong<=0)
+        {
+            return redirect('admin/sanpham/them')->with('thongbaoloi','Số lượng không được bé hơn 0');
+
+        }
         $sanpham=new SanPham();
         $sanpham->masanpham=$request->masanpham;
         $sanpham->tensanpham=$request->tensanpham;
@@ -109,12 +127,24 @@ class SanPhamController extends Controller
         $sanpham->trongluong=$request->trongluong;
         $sanpham->pin=$request->pin;
         $sanpham->giaban=$request->gia;
+        $sanpham->mausac=$request->mausac;
+        $sanpham->kichthuoc=$request->kichthuoc;
+        $sanpham->soluong=$request->soluong;
         if($request->hasFile('hinhanh')){
-            $file=$request->file('hinhanh');
-            $name=$file->getClientOriginalName();
-            $hinh=time()."_".$name;
-            $file->move('upload/img',$hinh);
+            $hinh="";
+            foreach($request->file('hinhanh') as $file)
+            {
+                $name=$file->getClientOriginalName();
+                $file->move('upload/img',time()."_".$name);
+                if($hinh==""){
+                    $hinh=time()."_".$name;
+                }else{
+                    $hinh.=";".time()."_".$name;
+                }
+                
+            }
             $sanpham->hinh=$hinh;
+            
         }else{
             $sanpham->hinh="";
         }
@@ -147,7 +177,9 @@ class SanPhamController extends Controller
     {
         $loaisanpham=TheLoai::all();
         $sanpham=SanPham::find($id);
-        return view('admin.sanpham.sua',['sanpham'=>$sanpham,'loaisanpham'=>$loaisanpham]);
+        $mausac=MauSac::all();
+        $kichthuoc=KichThuoc::all();
+        return view('admin.sanpham.sua',['sanpham'=>$sanpham,'loaisanpham'=>$loaisanpham,'mausac'=>$mausac,'kichthuoc'=>$kichthuoc]);
     }
 
     /**
@@ -161,14 +193,16 @@ class SanPhamController extends Controller
     {
         $this->validate($request,
         [
-            'tensanpham'=>'min:5|max:50|required',
-            'bonho'=>'min:5|max:50|required',
-            'hedieuhanh'=>'min:5|max:50|required',
-            'manhinh'=>'min:5|max:50|required',
-            'camera'=>'min:5|max:50|required',
-            'ketnoi'=>'min:5|max:50|required',
-            'trongluong'=>'min:5|max:50|required',
-            'pin'=>'min:5|max:50|required',
+            'tensanpham'=>'bail|min:5|max:50|required|',
+            'bonho'=>'bail|min:5|max:50|required',
+            'hedieuhanh'=>'bail|min:5|max:50|required',
+            'manhinh'=>'bail|min:5|max:50|required',
+            'camera'=>'bail|min:5|max:50|required',
+            'ketnoi'=>'bail|min:5|max:50|required',
+            'trongluong'=>'bail|min:5|max:50|required',
+            'pin'=>'bail|min:5|max:50|required',
+            'kichthuoc'=>'bail|required',
+            'mausac'=>'bail|required'
         ],
         [
             'tensanpham.min'=>'Tên sản phẩm không được bé hơn 5 kí tự và lớn hơn 50 kí tự',
@@ -194,13 +228,20 @@ class SanPhamController extends Controller
             'trongluong.required'=>'Trọng lượng sản phẩm không được để trống',
             'pin.min'=>'Pin sản phẩm không được bé hơn 5 kí tự và lớn hơn 50 kí tự',
             'pin.max'=>'Pin sản phẩm không được bé hơn 5 kí tự và lớn hơn 50 kí tự',
-            'pin.required'=>'Pin sản phẩm không được để trống'
+            'pin.required'=>'Pin sản phẩm không được để trống',
+            'mausac.required'=>'Màu sắc sản phẩm không được để trống',
+            'kichthuoc.required'=>'Kích thước sản phẩm không được để trống'
         ]);
         $sanpham=SanPham::find($id);
-        $temp=DB::table('sanpham')->where('tensanpham','<>',$sanpham->tensanpham)->get();
-        $kiemtra=$this->KiemTraTrung($temp,$request->tensanpham);
+        $temp=DB::table('sanpham')->where('masanpham','<>',$id)->get();
+        $kiemtra=$this->KiemTraTrung($temp,$request->tensanpham,$request->kichthuoc,$request->mausac);
         if($kiemtra){
-            return redirect('admin/sanpham/sua/'.$id)->with('error','Tên sản phẩm không được trùng');
+            return redirect('admin/sanpham/sua/'.$id)->with('thongbao','Kiểm tra lại màu sắc và kích thước và tên sản phẩm nó đã tồn tại');
+        }
+        if($request->soluong<=0)
+        {
+            return redirect('admin/sanpham/sua/'.$id)->with('thongbao','Số lượng không được bé hơn 0');
+
         }
         $sanpham->tensanpham=$request->tensanpham;
         $sanpham->loaisanpham=$request->loaisanpham;
@@ -211,12 +252,24 @@ class SanPhamController extends Controller
         $sanpham->ketnoi=$request->ketnoi;
         $sanpham->trongluong=$request->trongluong;
         $sanpham->pin=$request->pin;
+        $sanpham->mausac=$request->mausac;
+        $sanpham->kichthuoc=$request->kichthuoc;
+        $sanpham->soluong=$request->soluong;
         if($request->hasFile('hinhanh')){
-            $file=$request->file('hinhanh');
-            $name=$file->getClientOriginalName();
-            $hinh=time()."_".$name;
-            $file->move('upload/img',$hinh);
-            $sanpham->hinh=$hinh;
+            $hinh="";
+            foreach($request->file('hinhanh') as $file)
+            {
+                $name=$file->getClientOriginalName();
+                $file->move('upload/img',time()."_".$name);
+                if($hinh==""){
+                    $hinh=time()."_".$name;
+                }else{
+                    $hinh.=";".time()."_".$name;
+                }
+                
+            }
+            $sanpham->hinh=$sanpham->hinh.";".$hinh;
+            
         }
         $sanpham->save();
         return redirect('admin/sanpham/sua/'.$id)->with('thongbao','Sửa thành công một sản phẩm mới');
@@ -241,8 +294,8 @@ class SanPhamController extends Controller
     public function ShowProduct()
     {
         $sanpham =SanPham::getdiscount();
-        $new=DB::table('sanpham')->orderBy('created_at','desc')->limit(10)->get();
-
+        
+        $new=SanPham::getNewProduct();
         return view('frontend.sanpham.product',['sanpham'=>$sanpham,'newProduct'=>$new]);
     }
 }

@@ -33,7 +33,7 @@
                             {{$stt=1}}
                             @foreach($sanpham as $item)
                             <tr class="even gradeC" align="center">
-                                <td>{{$stt}}</td>
+                                <td>{{$stt++}}</td>
                                 <td>
                                     <img src="upload/img/{{$item->hinh}}" width="50px" height="50px" alt="">
                                 </td>

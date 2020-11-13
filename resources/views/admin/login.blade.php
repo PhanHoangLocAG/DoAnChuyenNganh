@@ -8,9 +8,9 @@
     <meta name="author" content="">
 
     <title>Admin</title>
-
+    <base href="{{asset('')}}" >
     <!-- Bootstrap Core CSS -->
-    <link href="/admin_asset/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="admin_asset/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- MetisMenu CSS -->
     <link href="admin_asset/bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
@@ -33,8 +33,14 @@
                         <h3 class="panel-title">Please Sign In</h3>
                     </div>
                     <div class="panel-body">
-                        <form role="form" action="" method="POST">
+                        @if(session('thongbao'))
+                            <div class="alert alert-danger">
+                                {{session('thongbao')}}
+                            </div>
+                        @endif
+                        <form role="form" action="{{URL::to('admin/login')}}" method="POST">
                             <fieldset>
+                                <input type="hidden" name="_token" value="{{csrf_token()}}">
                                 <div class="form-group">
                                     <input class="form-control" placeholder="E-mail" name="email" type="email" autofocus>
                                 </div>

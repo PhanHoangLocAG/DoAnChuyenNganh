@@ -21,6 +21,11 @@
                             {{session('thongbao')}}
                         </div>
                     @endif
+                    @if(session('thongbaoloi'))
+                        <div class="alert alert-danger">
+                            {{session('thongbaoloi')}}
+                        </div>
+                    @endif
                     <!-- /.col-lg-12 -->
                     <div class="col-lg-7" style="padding-bottom:120px ;width:700px;">
 
@@ -53,17 +58,17 @@
                                 <input type="text" class="form-control" name='sodienthoai' placeholder="Nhập số điện thoại nhân viên">
                             </div>
                             <div class="form-group">
-                                <label>Email</label>
-                                <input type="email" class="form-control" name='email' placeholder="Nhập email nhân viên">
-                            </div>
-                            <div class="form-group">
                                 <label>Ngày sinh</label>
                                 <input type="date" class="form-control" name='ngaysinh' >
+                            </div>
+                            <div class="form-group">
+                                <label>Hình ảnh</label>
+                                <input type="file" class="form-control" name='hinhanh'>
                             </div>
                             <button type="submit" class="btn btn-default">Thêm</button>
                             <button type="reset" class="btn btn-default">Reset</button>
                         </div>
-                        <div style="float: right;">
+                        <div style="float: right;width:300px;">
                             <div class="form-group">
                                 <label >Chức vụ:</label>
                                 <select class="form-control" name="chucvu">
@@ -85,16 +90,16 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label>Username:</label>
-                                <input type="text" class="form-control" name='username' placeholder="Nhập username">
+                                <label>Email</label>
+                                <input type="email" class="form-control" name='email' placeholder="Nhập email nhân viên">
                             </div>
                             <div class="form-group">
                                 <label>Password</label>
                                 <input type="password" class="form-control" name='password' placeholder="Nhập password">
                             </div>
                             <div class="form-group">
-                                <label>Hình ảnh</label>
-                                <input type="file" class="form-control" name='hinhanh'>
+                                <label>Password Confirm</label>
+                                <input type="password" class="form-control" name='passwordconfirm' placeholder="Nhập password confirm">
                             </div>
                         </div>
                         <form>

@@ -6,18 +6,21 @@
                             <div class="col-lg-12">
                                 <div class="header-top_right">
                                     <ul>
+                                        @if(isset($_GET['thongbao']))
                                         <li>
-                                            <a href="my-account.html"><i class="fas fa-user-alt"></i>  Tài khoản</a>
+                                            <a href="frontend/edit/{{$_GET['cmnd']}}"><i class="fas fa-user-alt"></i>{{$_GET['ten']}}</a>
                                         </li>
                                         <li>
                                             <a href="wishlist.html"><i class="fas fa-grin-hearts"></i> Yêu thích</a>
                                         </li>
                                         <li>
-                                            <a href="frontend/register"><i class="fas fa-sign-in-alt"></i> Đăng nhập</a>
-                                        </li>
-                                        <li>
                                             <a href="login-register.html"><i class="fas fa-door-open"></i>  Đăng xuất</a>
                                         </li>
+                                        @else
+                                        <li>
+                                            <a href="frontend/dangnhap"><i class="fas fa-sign-in-alt"></i> Đăng nhập</a>
+                                        </li>
+                                        @endif
                                     </ul>
                                 </div>
                             </div>

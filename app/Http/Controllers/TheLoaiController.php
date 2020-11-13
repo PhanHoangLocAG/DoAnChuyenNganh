@@ -43,7 +43,8 @@ class TheLoaiController extends Controller
                 'maloai'=>'required|min:5|max:50|unique:theloai',
                 'tenloai'=>'required|min:3|max:50|unique:theloai',
                 'nhasanxuat'=>'required|min:5|max:50',
-                'donvilaprap'=>'required|min:5|max:50'
+                'donvilaprap'=>'required|min:5|max:50',
+                'logo'=>'required'
             ],
             [
                 'maloai.required'=>'Mã loại không được để trống',
@@ -59,7 +60,8 @@ class TheLoaiController extends Controller
                 'nhasanxuat.required'=>'Tên nhà sản xuất không được để trống',
                 'donvilaprap.min'=>'Tên đơn vị lắp ráp không bé hơn 5 kí tự và lớn hơn 50 kí tự',
                 'donvilaprap.max'=>'Tên đơn vị lắp ráp không bé hơn 5 kí tự và lớn hơn 50 kí tự',
-                'donvilaprap.required'=>'Tên đơn vị lắp ráp không được để trống'
+                'donvilaprap.required'=>'Tên đơn vị lắp ráp không được để trống',
+                'logo.required'=>'Logo không được để trống'
             ]
         );
         $theloai= new TheLoai();
@@ -67,6 +69,16 @@ class TheLoaiController extends Controller
         $theloai->tenloai=$request->tenloai;
         $theloai->nhasanxuat=$request->nhasanxuat;
         $theloai->donvilaprap=$request->donvilaprap;
+        if($request->hasFile('logo')){
+                $file=$request->file('logo');
+                $name=$file->getClientOriginalName();
+                $hinh=time()."_".$name;
+                $file->move('upload/img',$hinh);
+                $theloai->logo=$hinh;
+            
+        }else{
+            $theloai->logo="";
+        }
         $theloai->save();
         return redirect('admin/theloai/them')->with('thongbao','Thêm thành công một loại sản phẩm mới');
     }
@@ -102,7 +114,7 @@ class TheLoaiController extends Controller
         $theloai=TheLoai::find($id);
         $this->validate($request,
             [
-                'tenloai'=>'required|min:3|max:50|unique:theloai',
+                'tenloai'=>'required|min:3|max:50|unique:theloai,tenloai,'.$id.',maloai',
                 'nhasanxuat'=>'required|min:5|max:50',
                 'donvilaprap'=>'required|min:5|max:50'
             ],
@@ -123,6 +135,14 @@ class TheLoaiController extends Controller
         $theloai->tenloai= $request->tenloai;
         $theloai->nhasanxuat= $request->nhasanxuat;
         $theloai->donvilaprap= $request->donvilaprap;
+        if($request->hasFile('logo')){
+            $file=$request->file('logo');
+            $name=$file->getClientOriginalName();
+            $hinh=time()."_".$name;
+            $file->move('upload/img',$hinh);
+            $theloai->logo=$hinh;
+        
+        }
         $theloai->save();
         return redirect("admin/theloai/sua/$id")->with('thongbao','Sửa thành công loại sản phẩm '.$id);
     }

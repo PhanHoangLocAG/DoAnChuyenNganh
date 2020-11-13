@@ -24,7 +24,7 @@
                                 {{session('thongbao')}}
                             </div>
                         @endif
-                        <form action="{{URL::to('admin/theloai/them')}}" method="POST">
+                        <form action="{{URL::to('admin/theloai/them')}}" method="POST" enctype="multipart/form-data">
                             <input type="hidden" name="_token" value="{{csrf_token()}}"/>
                             <div class="form-group">
                                 <label>Mã loại</label>
@@ -41,6 +41,10 @@
                             <div class="form-group">
                                 <label>Đơn vị lắp ráp</label>
                                 <input type="text" class="form-control" name='donvilaprap' placeholder="Nhập tên đơn vị lắp ráp">
+                            </div>
+                            <div class="form-group">
+                                <label>Logo</label>
+                                <input type="file" class="form-control" name='logo'>
                             </div>
                             <button type="submit" class="btn btn-default">Thêm</button>
                             <button type="reset" class="btn btn-default">Reset</button>

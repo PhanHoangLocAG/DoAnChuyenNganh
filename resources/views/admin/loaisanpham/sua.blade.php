@@ -9,6 +9,13 @@
                     <small></small>
                 </h1>
             </div>
+            @if(count($errors)>0)
+                <div class="alert alert-danger">
+                        @foreach($errors->all() as $err)
+                            {{$err}}<br>
+                        @endforeach
+                </div>
+            @endif
             @if(session('thongbao'))
                 <div class="alert alert-success">
                     {{session('thongbao')}}
@@ -34,6 +41,10 @@
                     <div class="form-group">
                         <label>Đơn vị lắp ráp</label>
                         <input type="text" class="form-control" value="{{$theloai->donvilaprap}}" name='donvilaprap' placeholder="Nhập đơn vị lắp ráp">
+                    </div>
+                    <div class="form-group">
+                        <label>Logo</label>
+                        <input type="file" class="form-control" name='logo'>
                     </div>
                     <button type="submit" class="btn btn-default">Sửa</button>
                     <button type="reset" class="btn btn-default">Reset</button>

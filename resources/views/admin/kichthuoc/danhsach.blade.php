@@ -34,8 +34,8 @@
                                 <td>{{ $stt++ }}</td>
                                 <td>{{ $item->makichthuoc }}</td>
                                 <td>{{ $item->kichthuoc }}</td>
-                                <td class="center"><i class="fa fa-trash-o  fa-fw"></i><a href="admin/luong/xoa/{{$item->makichthuoc}}"> Delete</a></td>
-                                <td class="center"><i class="fa fa-pencil fa-fw"></i> <a href="admin/luong/sua/{{$item->makichthuoc}}">Edit</a></td>
+                                <td class="center"><i class="fa fa-trash-o  fa-fw"></i><a href="admin/kichthuoc/xoa/{{$item->makichthuoc}}"> Delete</a></td>
+                                <td class="center"><i class="fa fa-pencil fa-fw"></i> <a href="admin/kichthuoc/sua/{{$item->makichthuoc}}">Edit</a></td>
                             </tr>
                             @endforeach
                         </tbody>

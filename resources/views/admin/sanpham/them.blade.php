@@ -20,8 +20,13 @@
                             </div>
                         @endif
                         @if(session('thongbao'))
-                            <div class="alert alert-success">
+                            <div class="alert alert-success">   
                                 {{session('thongbao')}}
+                            </div>
+                        @endif
+                        @if(session('thongbaoloi'))
+                            <div class="alert alert-danger">
+                                {{session('thongbaoloi')}}
                             </div>
                         @endif
                         <form action="{{URL::to('admin/sanpham/them')}}" enctype="multipart/form-data" method="POST">
@@ -75,8 +80,28 @@
                                 <input type="text" class="form-control" name='gia' placeholder="Nhập giá sản phẩm">
                             </div>
                             <div class="form-group">
+                                <label>Màu sắc</label>
+                                    <select class="form-control" name="mausac" >
+                                        @foreach($mausac as $item)
+                                        <option value="{{$item->mamau}}">{{$item->tenmau}}</option>
+                                        @endforeach
+                                    </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Kích thước</label>
+                                    <select class="form-control" name="kichthuoc" >
+                                        @foreach($kichthuoc as $item)
+                                        <option value="{{$item->makichthuoc}}">{{$item->kichthuoc}}</option>
+                                        @endforeach
+                                    </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Số lượng</label>
+                                <input type="text" class="form-control" name='soluong' placeholder="Nhập số lượng sản phẩm">
+                            </div>
+                            <div class="form-group">
                                 <label>Hình ảnh</label>
-                                <input type="file" class="form-control" name='hinhanh' >
+                                <input type="file" class="form-control" name='hinhanh[]' multiple='multiple'>
                             </div>
                             <button type="submit" class="btn btn-default">Thêm</button>
                             <button type="reset" class="btn btn-default">Reset</button>

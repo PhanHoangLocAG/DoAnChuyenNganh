@@ -24,8 +24,11 @@ class CreateSanphamTable extends Migration
             $table->string('ketnoi');
             $table->string('trongluong');
             $table->string('pin');
-            $table->string('hinh');
+            $table->text('hinh');
+            $table->string('mausac');
+            $table->string('kichthuoc');
             $table->string('giaban');
+            $table->integer('soluong');
             $table->timestamps();
         });
     }
