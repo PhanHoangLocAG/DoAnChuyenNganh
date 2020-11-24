@@ -46,7 +46,7 @@
                             <div class="product-item" style="width: 240px;" >
                                 <div class="single-product" style="padding: 0px;">
                                     <div class="product-img">
-                                        <a href="single-product.html">
+                                        <a href="frontend/detailProduct/{{$item->masanpham}}">
                                             <img class="primary-img" src="upload/img/{{$hinh}}" height="238px" alt="Kenne's Product Image">
                                         </a>
                                         @if(!is_null($item->discount))
@@ -56,12 +56,26 @@
                                         @endif
                                         <div class="add-actions">
                                             <ul>
-                                                <li class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><a href="javascript:void(0)" data-toggle="tooltip" data-placement="right" title="Quick View"><i class="ion-ios-search"></i></a>
+                                                <li class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><a href="frontend/detailProduct/{{$item->masanpham}}" data-toggle="tooltip" data-placement="right" title="Chi tiết sản phẩm"><i class="ion-ios-search"></i></a>
                                                 </li>
-                                                <li><a href="wishlist.html" data-toggle="tooltip" data-placement="right" title="Add To Wishlist"><i
+                                                <li><a 
+                                                
+                                                @if(isset($_COOKIE['cmnd']))
+                                                    href="frontend/themyeuthich/{{Cookie::get('cmnd')}}/{{$item->masanpham}}" 
+                                                @else
+                                                    href="frontend/dangnhap"
+                                                @endif
+                                                
+                                                data-toggle="tooltip" data-placement="right" title="Sản phẩm yêu thích"><i
                                                         class="ion-ios-heart-outline"></i></a>
                                                 </li>
-                                                <li><a href="cart.html" data-toggle="tooltip" data-placement="right" title="Add To cart"><i class="ion-bag"></i></a>
+                                                <li><a 
+                                                @if(isset($_COOKIE['cmnd']))
+                                                    href="frontend/add/{{$item->masanpham}}" 
+                                                @else
+                                                    href="frontend/dangnhap"
+                                                @endif
+                                                 data-toggle="tooltip" data-placement="right" title="Thêm vào giỏ hàng"><i class="ion-bag"></i></a>
                                                 </li>
                                             </ul>
                                         </div>

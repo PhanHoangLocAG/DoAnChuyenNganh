@@ -164,7 +164,10 @@ class SanPhamController extends Controller
     public function show($id)
     {
         $sanpham=SanPham::getDetailProduct($id);
-        return view('frontend.sanpham.detailProduct',['sanpham'=>$sanpham]);
+        $mausac=SanPham::getMauSac($sanpham[0]->tensanpham);
+        $branch=TheLoai::all();
+        //dd($mausac);
+        return view('frontend.sanpham.detailProduct',['sanpham'=>$sanpham,'mausac'=>$mausac,'branch'=>$branch]);
     }
 
     /**
@@ -293,9 +296,42 @@ class SanPhamController extends Controller
     //Show product for customer
     public function ShowProduct()
     {
-        $sanpham =SanPham::getdiscount();
-        
+        $tempSanPham =SanPham::getdiscount();
+        $tempSanPham=$this->deleteExist($tempSanPham);
+        $branch=TheLoai::all();
+        //dd($tempSanPham);
         $new=SanPham::getNewProduct();
-        return view('frontend.sanpham.product',['sanpham'=>$sanpham,'newProduct'=>$new]);
+        $new=$this->deleteExist($new);
+        return view('frontend.sanpham.product',['sanpham'=>$tempSanPham,'newProduct'=>$new,'branch'=>$branch]);
+    }
+
+    //xoa nhung san pham 
+    public function deleteExist($tempSanPham){
+        for($i=0;$i<count($tempSanPham);$i++){
+            for($j=$i+1;$j<count($tempSanPham);$j++){
+                if($tempSanPham[$i]==null){
+                    break;
+                }
+                if($tempSanPham[$j]==null){
+                    continue;
+                }
+                if($tempSanPham[$i]->tensanpham==$tempSanPham[$j]->tensanpham){
+                    if($tempSanPham[$i]->discount==null){
+                        $tempSanPham[$i]=$tempSanPham[$j];
+                        $tempSanPham[$j]=null;
+                    }else if($tempSanPham[$i]->discount!=null){
+                        $tempSanPham[$j]=null;
+                    }
+                }
+            }
+        }
+        foreach($tempSanPham as $key=>$value){
+            if($tempSanPham[$key]==null){
+                unset($tempSanPham[$key]);
+            }
+        }
+
+        return $tempSanPham;
     }
 }
+  

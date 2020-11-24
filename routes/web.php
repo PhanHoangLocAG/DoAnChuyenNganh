@@ -141,31 +141,36 @@ Route::group(['prefix'=>'admin'],function(){
 
 Route::group(['prefix'=>'frontend'],function(){
     
-    
-    Route::get('index',function(){
-        return view('frontend.layouts.index');
-    });
-
-
-
     //home
     Route::get('trangchu','SanPhamController@ShowProduct');
 
-    //register product
+    //dang ky va dang nhap khach hang
     Route::get('dangnhap','KhachHangController@formdangnhap');
     Route::post('dangnhap','KhachHangController@dangnhap');
     Route::get('dangky','KhachHangController@create');
     Route::post('dangky','KhachHangController@store');
     Route::get('edit/{ma}','KhachHangController@edit');
-    // Route::get('register','KhachHangController@create');
-    // Route::get('register','KhachHangController@create');
+    Route::get('dangxuat','KhachHangController@dangxuat');
+    Route::post('sua/{ma}','KhachHangController@update');
+    Route::post('update/{ma}','KhachHangController@updatePass');
 
-
-    //login product
-    Route::get('login',function(){
-        return view('frontend.customer.login');
-    });
 
     //detail product
     Route::get('detailProduct/{ma}','SanPhamController@show');
+    
+    
+    //gio hang
+    Route::get('giohang','GioHangController@index');
+    Route::get('add/{ma}','GioHangController@Addcart');
+    Route::get('add/{ma}/{mkh}','GioHangController@AddcartFromWish');
+    Route::get('deleteCart/{ma}','GioHangController@Deletecart');
+    Route::get('editCart','GioHangController@UpdateCart');
+    //san pham yeu thich
+    Route::get('yeuthich/{ma}','YeuThichController@show');
+    Route::get('themyeuthich/{ma}/{masp}','YeuThichController@store');
+    Route::get('xoayeuthich/{ma}/{masp}','YeuThichController@destroy');
+
+    //dat hang
+    Route::get('dathang/{ma}','ChiTietHoaDonController@index');
+    Route::post('muahang/{ma}','ChiTietHoaDonController@store');
 });

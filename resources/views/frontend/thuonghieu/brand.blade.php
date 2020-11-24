@@ -22,46 +22,13 @@
                                 }}
                             ]'>
 
+                                @foreach($branch as $item)
                                 <div class="brand-item">
                                     <a href="javascript:void(0)">
-                                        <img src="assets/images/brand/1.png" alt="Brand Images">
+                                        <img src="upload/img/{{$item->logo}}" width="170px" height="82px" alt="Brand Images">
                                     </a>
                                 </div>
-                                <div class="brand-item">
-                                    <a href="javascript:void(0)">
-                                        <img src="assets/images/brand/2.png" alt="Brand Images">
-                                    </a>
-                                </div>
-                                <div class="brand-item">
-                                    <a href="javascript:void(0)">
-                                        <img src="assets/images/brand/3.png" alt="Brand Images">
-                                    </a>
-                                </div>
-                                <div class="brand-item">
-                                    <a href="javascript:void(0)">
-                                        <img src="assets/images/brand/4.png" alt="Brand Images">
-                                    </a>
-                                </div>
-                                <div class="brand-item">
-                                    <a href="javascript:void(0)">
-                                        <img src="assets/images/brand/5.png" alt="Brand Images">
-                                    </a>
-                                </div>
-                                <div class="brand-item">
-                                    <a href="javascript:void(0)">
-                                        <img src="assets/images/brand/6.png" alt="Brand Images">
-                                    </a>
-                                </div>
-                                <div class="brand-item">
-                                    <a href="javascript:void(0)">
-                                        <img src="assets/images/brand/1.png" alt="Brand Images">
-                                    </a>
-                                </div>
-                                <div class="brand-item">
-                                    <a href="javascript:void(0)">
-                                        <img src="assets/images/brand/2.png" alt="Brand Images">
-                                    </a>
-                                </div>
+                                @endforeach
 
                             </div>
                         </div>

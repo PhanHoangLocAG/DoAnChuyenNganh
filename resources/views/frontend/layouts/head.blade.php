@@ -6,15 +6,15 @@
                             <div class="col-lg-12">
                                 <div class="header-top_right">
                                     <ul>
-                                        @if(isset($_GET['thongbao']))
+                                        @if(isset($_COOKIE['khachhang']))
                                         <li>
-                                            <a href="frontend/edit/{{$_GET['cmnd']}}"><i class="fas fa-user-alt"></i>{{$_GET['ten']}}</a>
+                                            <a href="frontend/edit/{{Cookie::get('cmnd')}}"><i class="fas fa-user-alt"></i>{{Cookie::get("ten")}}</a>
                                         </li>
                                         <li>
-                                            <a href="wishlist.html"><i class="fas fa-grin-hearts"></i> Yêu thích</a>
+                                            <a href="frontend/yeuthich/{{Cookie::get('cmnd')}}"><i class="fas fa-grin-hearts"></i> Yêu thích</a>
                                         </li>
                                         <li>
-                                            <a href="login-register.html"><i class="fas fa-door-open"></i>  Đăng xuất</a>
+                                            <a href="frontend/dangxuat"><i class="fas fa-door-open"></i>  Đăng xuất</a>
                                         </li>
                                         @else
                                         <li>
@@ -35,11 +35,20 @@
                             <div class="main-menu_area position-relative">
                                 <nav class="main-nav d-flex justify-content-center">
                                     <ul>
-                                        <li class="dropdown-holder"><a href="javascript:void(0)">Trang chủ</a></li>
+                                        <li class="dropdown-holder"><a href="frontend/trangchu">Trang chủ</a></li>
                                         <li class="megamenu-holder position-static"><a href="shop-left-sidebar.html">Sản phẩm<i
                                                 class="ion-chevron-down"></i></a>
                                             <ul class="kenne-megamenu">
-                                                
+                                                @foreach($branch as $item)
+                                                <li>
+                                                    <span>{{$item->tenloai}}</span>
+                                                    <ul>
+                                                        <a href="javascript:void(0)">
+                                                            <img src="upload/img/{{$item->logo}}" width="145px" height="60px" alt="Brand Images">
+                                                        </a>
+                                                    </ul>
+                                                </li>
+                                                @endforeach
                                             </ul>
                                         </li>
                                         <li><a href="javascript:void(0)">Lịch sử mua hàng</a>
@@ -64,9 +73,15 @@
                                             </a>
                                         </li>
                                         <li class="minicart-wrap">
-                                            <a href="#miniCart" class="minicart-btn toolbar-btn">
+                                            <a 
+                                            @if(isset($_COOKIE['cmnd']))
+                                                href="frontend/giohang" 
+                                            @else
+                                                href="frontend/dangnhap"
+                                            @endif
+                                            
+                                            class="minicart-btn">
                                                 <div class="minicart-count_area">
-                                                    
                                                     <i class="ion-bag"></i>
                                                 </div>
                                                 <div class="minicart-front_text">

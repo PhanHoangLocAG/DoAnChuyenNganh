@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\KhachHang;
+use App\TheLoai;
+use Illuminate\Support\Facades\Cookie;
+
 class KhachHangController extends Controller
 {
     /**
@@ -23,7 +26,8 @@ class KhachHangController extends Controller
      */
     public function create()
     {
-        return view('frontend.customer.register');
+        $branch=TheLoai::all();
+        return view('frontend.customer.register',['branch'=>$branch]);
     }
 
     /**
@@ -74,7 +78,7 @@ class KhachHangController extends Controller
          $khachhang->gioitinh=$request->gioitinh;
          $khachhang->diachi=$request->diachi;
          $khachhang->email=$request->email;
-         $khachhang->password=$request->matkhau;
+         $khachhang->password=md5($request->matkhau);
          $khachhang->save();
          return redirect('frontend/dangnhap')->with('thongbao','Đăng ký thành công vui lòng đăng nhập');
     }
@@ -97,9 +101,9 @@ class KhachHangController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {
+    {   $branch=TheLoai::all();
         $khachhang=KhachHang::find($id);
-        return view('frontend.customer.edit',['kh'=>$khachhang]);
+        return view('frontend.customer.edit',['khachhang'=>$khachhang,'branch'=>$branch]);
     }
 
 
@@ -113,7 +117,59 @@ class KhachHangController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request,
+        [
+            'ten'=>'bail|required',
+            'sodienthoai'=>'bail|min:10|max:15|required|unique:khachhang,sodienthoai,'.$id.',chungminhnhandan',
+            'ngaysinh'=>'bail|required',
+            'email'=>'bail|required|unique:khachhang,email,'.$id.',chungminhnhandan',
+            'diachi'=>'bail|required'
+        ],
+        [
+            'hoten.required'=>'Họ tên không được để trống',
+            'sodienthoai.required'=>'Số điện thoại không được để trống',
+            'sodienthoai.min'=>'Số điện thoại không được ít hơn 9 và nhiều hơn 15 kí tự',
+            'sodienthoai.max'=>'Số điện thoại không được ít hơn 9 và nhiều hơn 15 kí tự',
+            'sodienthoai.unique'=>'Số điện thoại không được trùng',
+            'email.required'=>'Email không được bỏ trống',
+            'email.unique'=>'Email không được trùng',
+            'diachi.required'=>'Địa chỉ không được bỏ trống'
+        ]);
+        $khachhang=KhachHang::find($id);
+        $khachhang->tenkhachhang=$request->ten;
+        $khachhang->sodienthoai=$request->sodienthoai;
+        $khachhang->ngaysinh=$request->ngaysinh;
+        $khachhang->gioitinh=$request->gioitinh;
+        $khachhang->diachi=$request->diachi;
+        $khachhang->email=$request->email;
+        $khachhang->save();
+        return redirect('frontend/edit/'.$id)->with('thongbao',"Cập nhật thành công");
+    }
+
+    public function updatePass(Request $request,$id){
+        $this->validate($request,
+        [
+            'pass'=>'bail|required',
+            'passNew'=>'bail|required',
+            'passConfirm'=>'bail|required',
+        ],
+        [
+            'pass.required'=>'Mật khẩu cũ không được bỏ trống',
+            'passConfirm.required'=>'Mật khẩu xác nhận không được để trống',
+            'passNew.required'=>'Mật khẩu mới không được để trống',
+        ]);
+       
+        $khachhang=KhachHang::find($id);
+        
+        if($khachhang->password!=md5($request->pass)){
+            return redirect('frontend/edit/'.$id)->with('thongbaoloi','Mật khẩu cũ không hợp lệ');
+        }
+        if($request->passNew!=$request->passConfirm){
+            return redirect('frontend/edit/'.$id)->with('thongbaoloi','Mật khẩu xác nhận không khớp');
+        }
+        $khachhang->password=md5($request->passNew);
+        $khachhang->save();
+        return redirect('frontend/edit/'.$id)->with('thongbao',"Cập nhật thành công");
     }
 
     /**
@@ -127,7 +183,8 @@ class KhachHangController extends Controller
         //
     }
     public function formdangnhap(){
-        return view('frontend.customer.login');
+        $branch=TheLoai::all();
+        return view('frontend.customer.login',['branch'=>$branch]);
     }
 
     public function dangnhap(Request $request){
@@ -142,13 +199,21 @@ class KhachHangController extends Controller
         ]);
         $khachhang=KhachHang::all();
         foreach($khachhang as $item){
-            if($item->email==$request->email && $item->password==$request->password){
-                return redirect()->action('SanPhamController@ShowProduct',['thongbao'=>true,'cmnd'=>$item->chungminhnhandan,'ten'=>$item->tenkhachhang]);
+            if($item->email==$request->email && $item->password==md5($request->password)){
+                Cookie::queue('khachhang',$item,2628000);
+                Cookie::queue('ten',$item->tenkhachhang,2628000);
+                Cookie::queue('cmnd',$item->chungminhnhandan,2628000);
+                return redirect()->action('SanPhamController@ShowProduct');
             }
         }
         return redirect('frontend/dangnhap')->with('thongbao','Email hoặc Password sai');
     }
 
-    
+    public function dangxuat(){
+        Cookie::queue(Cookie::forget('khachhang'));
+        Cookie::queue(Cookie::forget('ten'));
+        Cookie::queue(Cookie::forget('cmnd'));
+        return redirect('frontend/trangchu');
+    }
 
 }

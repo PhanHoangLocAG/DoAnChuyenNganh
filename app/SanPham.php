@@ -13,7 +13,7 @@ class SanPham extends Model
 
     //get list discount product
     public static function getdiscount(){
-        return DB::table('sanpham')->leftjoin('discount','sanpham.masanpham','=','discount.masanpham')->select('sanpham.masanpham','sanpham.tensanpham','sanpham.giaban','sanpham.hinh','discount','Money_discount')->get();
+         return DB::table('sanpham')->leftjoin('discount','sanpham.masanpham','=','discount.masanpham')->select('sanpham.masanpham','sanpham.tensanpham','sanpham.giaban','sanpham.hinh','discount','Money_discount')->get();        
     }
     //san pham moi
     public static function getNewProduct(){
@@ -23,5 +23,15 @@ class SanPham extends Model
     //get detail product discount
     public static function getDetailProduct($ma){
         return DB::table('sanpham')->leftjoin('discount','sanpham.masanpham','=','discount.masanpham')->where('sanpham.masanpham','=',$ma)->select('sanpham.*','discount.Money_discount','discount.discount')->get();
+    }
+
+    //get detail product
+    public static function getDetailProductDefault($ma){
+        $khachhang= DB::table('sanpham')->leftjoin('discount','sanpham.masanpham','=','discount.masanpham')->where('sanpham.masanpham','=',$ma)->select('sanpham.*','discount.Money_discount','discount.discount')->get();
+        return $khachhang;
+    }
+
+    public static function getMauSac($name){
+        return DB::table('sanpham')->where('sanpham.tensanpham','=',$name)->get();
     }
 }

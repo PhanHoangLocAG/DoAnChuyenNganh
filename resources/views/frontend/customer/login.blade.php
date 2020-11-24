@@ -14,6 +14,11 @@
                                     @endforeach
                             </div>
                         @endif
+                        @if(session('thongbao'))
+                                <div class="alert alert-danger">
+                                    {{session('thongbao')}}
+                                </div>
+                        @endif
                         <form action="{{URL::to('frontend/dangnhap')}}" enctype="multipart/form-data" method="post">
                             <input type="hidden" name="_token" value="{{csrf_token()}}">
                         <div class="login-form">

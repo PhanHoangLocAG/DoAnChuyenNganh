@@ -30,12 +30,24 @@
                                     @endif
                                     <div class="add-actions">
                                         <ul>
-                                            <li class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><a href="frontend/detailProduct/{{$item->masanpham}}" data-toggle="tooltip" data-placement="right" title="Quick View"><i class="ion-ios-search"></i></a>
+                                            <li class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><a href="frontend/detailProduct/{{$item->masanpham}}" data-toggle="tooltip" data-placement="right" title="Xem chi tiết sản phẩm"><i class="ion-ios-search"></i></a>
                                             </li>
-                                            <li><a href="wishlist.html" data-toggle="tooltip" data-placement="right" title="Add To Wishlist"><i
+                                            <li><a 
+                                            @if(isset($_COOKIE['cmnd']))
+                                                href="frontend/themyeuthich/{{Cookie::get('cmnd')}}/{{$item->masanpham}}" 
+                                            @else
+                                                href="frontend/dangnhap"
+                                            @endif
+                                                data-toggle="tooltip" data-placement="right" title="Sản phẩm yêu thích"><i
                                                     class="ion-ios-heart-outline"></i></a>
                                             </li>
-                                            <li><a href="cart.html" data-toggle="tooltip" data-placement="right" title="Add To cart"><i class="ion-bag"></i></a>
+                                            <li><a 
+                                            @if(isset($_COOKIE['cmnd']))
+                                                href="frontend/add/{{$item->masanpham}}"
+                                            @else
+                                                href="frontend/dangnhap"
+                                            @endif
+                                            data-toggle="tooltip" data-placement="right" title="Thêm vào giỏ hàng"><i class="ion-bag"></i></a>
                                             </li>
                                         </ul>
                                     </div>
