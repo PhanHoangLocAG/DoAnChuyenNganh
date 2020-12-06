@@ -43,8 +43,8 @@
                                 <label>Loại sản phẩm</label>
                                     <select class="form-control" name="loaisanpham" >
                                         @foreach($loaisanpham as $item)
-                                            @if($item->maloai==$sanpham->loaisanpham)
-                                            <option value="{{$item->maloai}}" checked>{{$item->tenloai}}</option>
+                                            @if($item->maloai == $sanpham->loaisanpham)
+                                            <option value="{{$item->maloai}}" selected>{{$item->tenloai}}</option>
                                             @else
                                             <option value="{{$item->maloai}}">{{$item->tenloai}}</option>
                                             @endif

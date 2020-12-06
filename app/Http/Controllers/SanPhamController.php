@@ -6,8 +6,10 @@ use App\KichThuoc;
 use App\MauSac;
 use App\SanPham;
 use App\TheLoai;
+use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+
 
 class SanPhamController extends Controller
 {
@@ -182,6 +184,7 @@ class SanPhamController extends Controller
         $sanpham=SanPham::find($id);
         $mausac=MauSac::all();
         $kichthuoc=KichThuoc::all();
+        //dd($loaisanpham,$sanpham);
         return view('admin.sanpham.sua',['sanpham'=>$sanpham,'loaisanpham'=>$loaisanpham,'mausac'=>$mausac,'kichthuoc'=>$kichthuoc]);
     }
 
@@ -241,11 +244,6 @@ class SanPhamController extends Controller
         if($kiemtra){
             return redirect('admin/sanpham/sua/'.$id)->with('thongbao','Kiểm tra lại màu sắc và kích thước và tên sản phẩm nó đã tồn tại');
         }
-        if($request->soluong<=0)
-        {
-            return redirect('admin/sanpham/sua/'.$id)->with('thongbao','Số lượng không được bé hơn 0');
-
-        }
         $sanpham->tensanpham=$request->tensanpham;
         $sanpham->loaisanpham=$request->loaisanpham;
         $sanpham->bonho=$request->bonho;
@@ -257,7 +255,6 @@ class SanPhamController extends Controller
         $sanpham->pin=$request->pin;
         $sanpham->mausac=$request->mausac;
         $sanpham->kichthuoc=$request->kichthuoc;
-        $sanpham->soluong=$request->soluong;
         if($request->hasFile('hinhanh')){
             $hinh="";
             foreach($request->file('hinhanh') as $file)
@@ -289,9 +286,18 @@ class SanPhamController extends Controller
     public function destroy($id)
     {
         $sanpham=SanPham::find($id);
+        //delete img
+        $hinh = explode(";",$sanpham->hinh);
+        //dd($hinh);
+        foreach($hinh as $item){
+           // dd($item);
+            File::delete(public_path("upload/img/$item"));
+        }
         $sanpham->delete();
         return redirect('admin/sanpham/danhsach')->with('thongbao','Xóa thành công một sản phẩm');
     }
+
+    
 
     //Show product for customer
     public function ShowProduct()
@@ -333,5 +339,68 @@ class SanPhamController extends Controller
 
         return $tempSanPham;
     }
+
+    //Tìm kiếm theo tên
+    public function search(Request $req){
+        if($req->search == null){
+            return redirect('frontend/trangchu');
+        }else{
+            $sanpham = SanPham::getListProductSearch($req->search);
+            $branch=TheLoai::all();
+            return view('frontend.timkiem.newProduct',['branch'=>$branch,'newProduct'=>$sanpham,'ten'=>$req->search]);
+        }
+    }
+    //Tìm kiếm theo loại sản phẩm
+    public function searchType($ten,$maloai){
+        //dd($maloai);
+            $sanpham = SanPham::getListProductType($ten,$maloai);
+            //dd($sanpham);
+            $branch=TheLoai::all();
+            return view('frontend.timkiem.newProduct',['branch'=>$branch,'newProduct'=>$sanpham,'ten'=>$ten]);
+    }
+    //Tìm kiếm theo sản phẩm mới
+    public function searchNewProduct($ten){
+        //dd($maloai);
+            $sanpham = SanPham::getNewProductName($ten);
+            //dd($sanpham);
+            $branch=TheLoai::all();
+            return view('frontend.timkiem.newProduct',['branch'=>$branch,'newProduct'=>$sanpham,'ten'=>$ten]);
+    }
+    //Tìm kiếm theo cao đến thấp
+    public function searchPriceHightToLow($ten){
+        //dd($maloai);
+            $sanpham = SanPham::getProductHightToLow($ten);
+            //dd($sanpham);
+            $branch=TheLoai::all();
+            return view('frontend.timkiem.newProduct',['branch'=>$branch,'newProduct'=>$sanpham,'ten'=>$ten]);
+    }
+    //Tìm kiếm sản phẩm từ thấp đến cao
+    public function searchPriceLowToHight($ten){
+        //dd($maloai);
+            $sanpham = SanPham::getProductLowToHight($ten);
+            //dd($sanpham);
+            $branch=TheLoai::all();
+            return view('frontend.timkiem.newProduct',['branch'=>$branch,'newProduct'=>$sanpham,'ten'=>$ten]);
+    }
+
+
+    //Tìm kiếm theo giá bán
+    public function searchPrice($ten,$gia){
+        //dd($maloai);
+            $sanpham = SanPham::getListProductPrice($ten,$gia);
+            //dd($sanpham);
+            $branch=TheLoai::all();
+            return view('frontend.timkiem.newProduct',['branch'=>$branch,'newProduct'=>$sanpham,'ten'=>$ten]);
+    }
+
+    //Tìm khiếm theo sản phẩm khuyến mãi
+    public function searchDiscount($ten){
+        //dd($maloai);
+            $sanpham = SanPham::getListProductDiscount($ten);
+            //dd($sanpham);
+            $branch=TheLoai::all();
+            return view('frontend.timkiem.newProduct',['branch'=>$branch,'newProduct'=>$sanpham,'ten'=>$ten]);
+    }
+
 }
   

@@ -21,6 +21,8 @@ class CreateHoadonTable extends Migration
             $table->string('diachi');
             $table->string('sodienthoai');
             $table->string('email');
+            $table->tinyInteger('thanhtoan');
+            $table->tinyInteger('phuongthucgiaohang');
             $table->timestamps();
         });
     }

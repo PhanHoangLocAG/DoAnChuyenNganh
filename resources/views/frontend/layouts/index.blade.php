@@ -46,6 +46,7 @@
     <!--<link rel="stylesheet" href="assets/css/style.min.css">-->
     <link rel="stylesheet" href="assets/css/plugins/style_me.css">
 
+    <script src="ckeditor/ckeditor.js" ></script>
 </head>
 
 <body class="template-color-2">
@@ -123,7 +124,6 @@
     <script src="assets/js/plugins/jquery.zoom.min.js"></script>
     <!-- Timecircles JS -->
     <script src="assets/js/plugins/timecircles.js"></script>
-    
     <!-- Vendor & Plugins JS (Please remove the comment from below vendor.min.js & plugins.min.js for better website load performance and remove js files from avobe) -->
     <!-- 
 <script src="assets/js/vendor/vendor.min.js"></script>
@@ -131,7 +131,6 @@
 
     <!-- Main JS -->
     <script src="assets/js/main.js"></script>
-
     <script>
         $('.carousel').carousel({
             interval: 2500

@@ -135,6 +135,16 @@
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
+                        <!-- Hóa đơn invoice -->
+                        <li>
+                            <a href="#"><i class="fa fa-users fa-fw"></i>Hóa đơn<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="admin/hoadon/danhsach">Danh sách hóa đơn</a>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
                     </ul>
                 </div>
                 <!-- /.sidebar-collapse -->

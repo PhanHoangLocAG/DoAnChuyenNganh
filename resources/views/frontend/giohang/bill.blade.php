@@ -42,6 +42,19 @@
                                             <input type="text" name="sodienthoai" value="{{$khachhang->sodienthoai}}" >
                                         </div>
                                     </div>
+                                    <div class="col-md-12">
+                                        <label style="display: block;">Phương thức giao hàng <span class="required">*</span></label>
+                                        <div class="form-check-inline" style="margin-left: 60px;">
+                                            <label class="form-check-label">
+                                                <input type="radio" class="form-check-input" name="giaohang" value="0" checked>Giao hàng thông thường
+                                            </label>
+                                        </div>
+                                        <div class="form-check-inline">
+                                            <label class="form-check-label">
+                                                <input type="radio" class="form-check-input" name="giaohang" value="1">Giao hàng nhanh (24 giờ)
+                                            </label>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </form>

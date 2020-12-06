@@ -25,15 +25,15 @@
                                 <div class="row">
                                     <div class="col-md-6 col-12 mb--20">
                                         <label>Họ và tên</label>
-                                        <input type="text" name="hoten" placeholder="Nhập họ và tên">
+                                        <input type="text" name="hoten" value="{{old('hoten')}}" placeholder="Nhập họ và tên">
                                     </div>
                                     <div class="col-md-6 col-12 mb--20">
                                         <label>Số điện thoại</label>
-                                        <input type="text" name="sodienthoai" placeholder="Nhập số điện thoại">
+                                        <input type="text" name="sodienthoai" value="{{old('sodienthoai')}}" placeholder="Nhập số điện thoại">
                                     </div>
                                     <div  class="col-md-6 col-12 mb--20">
                                         <label>Ngày sinh</label>
-                                        <input type="date" name="ngaysinh" >
+                                        <input type="date" value="{{old('ngaysinh')}}" name="ngaysinh" >
                                     </div>
                                     <div class="col-md-6 col-12 mb--20 form-group">
                                         <label>Giới tính</label>
@@ -44,23 +44,23 @@
                                     </div>
                                     <div class="col-md-12">
                                         <label>Chứng minh nhân dân</label>
-                                        <input type="text" name="cmnd" placeholder="Nhập chứng minh nhân dân">
+                                        <input type="text" name="cmnd" value="{{ old('cmnd') }}" placeholder="Nhập chứng minh nhân dân">
                                     </div>
                                     <div class="col-md-12">
                                         <label>Địa chỉ </label>
-                                        <input type="text" name="diachi" placeholder="Nhập địa chỉ ">
+                                        <input type="text" value="{{ old('diachi') }}" name="diachi" placeholder="Nhập địa chỉ ">
                                     </div>
                                     <div class="col-md-12">
                                         <label>Email</label>
-                                        <input type="email" name="email" placeholder="Nhập địa chỉ email">
+                                        <input type="email" value="{{ old('email') }}" name="email" placeholder="Nhập địa chỉ email">
                                     </div>
                                     <div class="col-md-6">
                                         <label>Mật khẩu</label>
-                                        <input type="password" name="matkhau" placeholder="Nhập mật khẩu">
+                                        <input type="password" value="{{ old('matkhau') }}" name="matkhau" placeholder="Nhập mật khẩu">
                                     </div>
                                     <div class="col-md-6">
                                         <label>Xác nhận mật khẩu</label>
-                                        <input type="password" name="xacnhanmatkhau" placeholder="Xác nhận mật khẩu">
+                                        <input type="password"  value="{{ old('xacnhanmatkhau') }}" name="xacnhanmatkhau" placeholder="Xác nhận mật khẩu">
                                     </div>
                                     <div class="col-12">
                                         <button class="kenne-register_btn">Đăng ký</button>

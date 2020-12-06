@@ -6,6 +6,11 @@
             <div class="container">
                 <div class="row">
                     <div class="col-12">
+                        @if(session('thongbao'))
+                            <div class="alert alert-danger">   
+                                {{session('thongbao')}}
+                            </div>
+                        @endif
                         <form action="{{URL::to('frontend/editCart')}}">
                             <div class="table-content table-responsive">
                                 <table class="table">
@@ -27,13 +32,13 @@
                                                         title="Remove"></i></a></td>
                                                     <td class="kenne-product-thumbnail"><a href="javascript:void(0)"><img src="upload/img/{{$value['productInfo']->hinh}}" width="100px" height="115px" alt="Uren's Cart Thumbnail"></a></td>
                                                     <td class="kenne-product-name"><a href="javascript:void(0)">{{$key}}</a></td>
-                                                    <td class="kenne-product-price"><span class="amount">{{$value['productInfo']->giaban}}</span></td>
+                                                    <td class="kenne-product-price"><span class="amount">{{number_format($value['productInfo']->giaban , 0 , "" ,'.')." VND"}}</span></td>
                                                     <td class="quantity">
                                                         <div class="cart-plus-minus">
                                                             <input class="cart-plus-minus-box" name = "{{$key}}"  value="{{$value['quantity']}}" type="text">
                                                         </div>
                                                     </td>
-                                                    <td class="product-subtotal"><span class="amount">{{$value['price']}}</span></td>
+                                                    <td class="product-subtotal"><span class="amount">{{number_format($value['price'] , 0 , "" ,'.' )." VND"}}</span></td>
                                                 </tr>
                                             @endforeach
                                         @endif
@@ -56,7 +61,7 @@
                                         <ul>
                                             <li>Total 
                                             @if($cart != null)
-                                                <span>{{$cart->totalPrice}}</span>
+                                                <span>{{ number_format( $cart->totalPrice , 0 , "" , "." )." VND" }}</span>
                                             @endif
                                             </li>
                                         </ul>

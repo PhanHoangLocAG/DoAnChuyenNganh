@@ -79,9 +79,8 @@ Route::group(['prefix'=>'admin'],function(){
     //khach hang
     Route::group(['prefix'=>'khachhang'],function(){
         
-        Route::get('danhsach',function(){
-            return view('admin.khachhang.danhsach');
-        });
+        Route::get('danhsach','KhachHangController@index');
+        Route::get('xoa/{ma}','KhachHangController@destroy');
     });
 
     //chuc vu
@@ -136,6 +135,11 @@ Route::group(['prefix'=>'admin'],function(){
         Route::get('danhsach','Controller@index');
     });
 
+    //Hóa đơn
+    Route::group(['prefix'=>'hoadon'],function(){
+        
+        Route::get('danhsach','ChiTietHoaDonController@listInvoice');
+    });
 });
 
 
@@ -171,6 +175,19 @@ Route::group(['prefix'=>'frontend'],function(){
     Route::get('xoayeuthich/{ma}/{masp}','YeuThichController@destroy');
 
     //dat hang
-    Route::get('dathang/{ma}','ChiTietHoaDonController@index');
-    Route::post('muahang/{ma}','ChiTietHoaDonController@store');
+    Route::get('dathang/{ma}' , 'ChiTietHoaDonController@index');
+    Route::post('muahang/{ma}' , 'ChiTietHoaDonController@store');
+    Route::get('donhang/{ma}' , 'ChiTietHoaDonController@show');
+    Route::get('huydon/{ma}' , 'ChiTietHoaDonController@destroy');
+
+    //Tim kiem
+    Route::post('timkiem','SanPhamController@search');
+    Route::get('timkiemloai/{ten}/{maloai}','SanPhamController@searchType');
+    Route::get('timkiemgia/{ten}/{gia}','SanPhamController@searchPrice');
+    Route::get('timkiemkhuyenmai/{ten}','SanPhamController@searchDiscount');
+    Route::get('timkiemsanphammoi/{ten}','SanPhamController@searchNewProduct');
+    Route::get('timkiemcaodenthap/{ten}','SanPhamController@searchPriceHightToLow');
+    Route::get('timkiemthapdencao/{ten}','SanPhamController@searchPriceLowToHight');
 });
+
+Route::get('sentmail','MailController@basic_email');

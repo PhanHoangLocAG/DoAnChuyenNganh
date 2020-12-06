@@ -23,7 +23,7 @@
                                 <th>Mã khách hàng </th>
                                 <th>Tên</th>
                                 <th>Giới tính</th>
-                                <th>Tuổi</th>
+                                <th>Ngày sinh</th>
                                 <th>Địa chỉ</th>
                                 <th>Email</th>
                                 <th>Số điện thoại</th>
@@ -31,16 +31,27 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @if(isset($khachhang))
+                            @foreach($khachhang as $item)
+                           
                             <tr class="even gradeC" align="center">
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td class="center"><i class="fa fa-trash-o  fa-fw"></i><a href="admin/theloai/xoa/"> Delete</a></td>
+                                <td>{{ $item->chungminhnhandan }}</td>
+                                <td>{{ $item->tenkhachhang }}</td>
+                                <td>
+                                    @if($item->gioitinh == 1)
+                                    {{ "Nam" }}
+                                    @else
+                                    {{ "Nữ" }}
+                                    @endif
+                                </td>
+                                <td>{{ $item->ngaysinh }}</td>
+                                <td>{{ $item->diachi }}</td>
+                                <td>{{ $item->email }}</td>
+                                <td>{{ $item->sodienthoai }}</td>
+                                <td class="center"><i class="fa fa-trash-o  fa-fw"></i><a href="admin/khachhang/xoa/{{$item->chungminhnhandan}}"> Delete</a></td>
                             </tr>
+                            @endforeach
+                            @endif
                         </tbody>
                     </table>
                 </div>

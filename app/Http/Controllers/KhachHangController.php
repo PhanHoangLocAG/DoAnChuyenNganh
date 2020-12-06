@@ -6,17 +6,17 @@ use Illuminate\Http\Request;
 use App\KhachHang;
 use App\TheLoai;
 use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Redirect;
 
 class KhachHangController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+   
+    // cho admin xem
     public function index()
     {
-        //
+        $khachhang = KhachHang::all();
+        //dd($khachhang[0]->chungminhnhandan);
+        return view('admin.khachhang.danhsach',['khachhang'=>$khachhang]);
     }
 
     /**
@@ -59,7 +59,7 @@ class KhachHangController extends Controller
             'cmnd.required'=>'Chứng minh nhân dân không được để trống',
             'cmnd.min'=>'Chứng minh nhân dân không được ít hơn 9 kí tự và nhiều hơn 13 kí tự',
             'cmnd.max'=>'Chứng minh nhân dân không được ít hơn 9 kí tự và nhiều hơn 13 kí tự',
-            'cmnd.unique'=>'Chứng minh nhân dân không được bỏ trống',
+            'cmnd.unique'=>'Chứng minh nhân dân không được trùng',
             'email.required'=>'Email không được bỏ trống',
             'email.unique'=>'Email không được trùng',
             'matkhau.required'=>'Mật khẩu không được bỏ trống',
@@ -67,7 +67,9 @@ class KhachHangController extends Controller
             'diachi.required'=>'Địa chỉ không được bỏ trống'
         ]);
          if($request->matkhau!=$request->xacnhanmatkhau){
-             return redirect('frontend/dangky')->with('thongbao',"Mật khẩu xác nhận phải trùng với mật khẩu");
+            //return Redirect::back()->withErrors('thongbao' , "Mật khẩu xác nhận phải trùng với mật khẩu" );
+           
+            return redirect()->back()->withInput($request->input())->with('thongbao',"Mật khẩu xác nhận phải trùng với mật khẩu");
          }   
          
          $khachhang=new KhachHang();
@@ -180,7 +182,10 @@ class KhachHangController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $khachhang = KhachHang::find($id);
+       // dd($khachhang);
+        $khachhang->delete();
+        return redirect('admin/khachhang/danhsach')->with('thongbao', 'Xóa thành công một khách hàng');
     }
     public function formdangnhap(){
         $branch=TheLoai::all();

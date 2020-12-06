@@ -19,7 +19,9 @@ class GioHangController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function Addcart(Request $req,$id){
+        //dd($id);
         $sanpham = SanPham::getDetailProduct($id);
+        $id = str_replace("_" , " " , $id);
         $sanpham=$this->getSanPham($sanpham[0]); 
         if($sanpham != null){
             $oldCart = Session('Cart') ? Session('Cart') : null;
@@ -67,6 +69,9 @@ class GioHangController extends Controller
     public function UpdateCart(Request $req){
         
         $oldCart = Session('Cart') ? Session('Cart') : null;
+        if($oldCart == null){
+            return redirect()->back()->with('thongbao','Chưa có sản phẩm để cập nhật');
+        }
         $newCart = new Cart($oldCart);
         //dd($newCart);
         foreach($req->request as $key => $value){

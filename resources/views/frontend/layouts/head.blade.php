@@ -51,7 +51,14 @@
                                                 @endforeach
                                             </ul>
                                         </li>
-                                        <li><a href="javascript:void(0)">Lịch sử mua hàng</a>
+                                        <li><a 
+                                        @if(isset($_COOKIE['cmnd']))
+                                            href="frontend/donhang/{{Cookie::get('cmnd')}}"
+                                        @else
+                                            href="frontend/dangnhap"
+                                        @endif
+                                        
+                                        >Đơn hàng</a>
                                         </li>
                                         <li><a href="javascript:void(0)">Hỏi đáp</a>
                                             
@@ -59,11 +66,14 @@
                                         <li><a href="contact-us.html">Liên hệ </a></li>
                                         <li><a href="about-us.html">Thông tin</a></li>
                                     </ul>
-                                <div class="input-group mb-3" style="width: 250px;margin-top: 11px;margin-right: 30px;">
-                                    <input type="text" class="form-control" placeholder="Search">
-                                    <div class="input-group-append">
-                                        <button class="btn " style="background-color:rgb(56,156,243);width:45px;color: white;" type="submit" style="width: 35px;"><i class="ion-ios-search"></i></button>
-                                    </div>
+                                <div class="input-group mb-3" style="width: 270px;margin-top: 11px;margin-right: 30px;">
+                                    <form action="{{URL::to('frontend/timkiem') }}" class="form-inline" method="post">
+                                        @csrf()
+                                        <input type="text" class="form-control" name='search' placeholder="Nhập tên sản phẩm">
+                                        <div class="input-group-append">
+                                            <button class="btn " style="background-color:rgb(56,156,243);width:48px;height: 37px;color: white;" type="submit" style="width: 35px;"><i class="ion-ios-search"></i></button>
+                                        </div>
+                                    </form>
                                 </div>
                                 <div class="header-right_area d-none d-lg-inline-block" style="height:46px;margin-top:6px;">
                                     <ul>

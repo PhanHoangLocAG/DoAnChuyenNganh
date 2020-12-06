@@ -22,7 +22,7 @@ class Cart {
     }
 
     public function AddCart($product , $id){
-        //dd($this->products);
+        //dd($id);
         $newProduct = ['quantity'=>0 , 'price'=>$product->giaban , 'productInfo' => $product];
 
         if($this->products){

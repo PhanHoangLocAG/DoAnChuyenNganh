@@ -32,10 +32,11 @@
                         <tbody>
                             {{$stt=1}}
                             @foreach($sanpham as $item)
+                            <?php $hinh = explode(";",$item->hinh) ?>
                             <tr class="even gradeC" align="center">
                                 <td>{{$stt++}}</td>
                                 <td>
-                                    <img src="upload/img/{{$item->hinh}}" width="50px" height="50px" alt="">
+                                    <img src="upload/img/{{$hinh[0]}}" width="50px" height="50px" alt="">
                                 </td>
                                 <td>{{$item->masanpham}}</td>
                                 <td>{{$item->tensanpham}}</td>
