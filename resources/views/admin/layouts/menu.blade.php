@@ -142,6 +142,9 @@
                                 <li>
                                     <a href="admin/hoadon/danhsach">Danh sách hóa đơn</a>
                                 </li>
+                                <li>
+                                    <a href="admin/hoadon/danhsachthanhtoan">Hóa đơn thanh toán</a>
+                                </li>
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>

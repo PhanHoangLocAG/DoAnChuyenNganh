@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\BinhLuan;
 use App\KichThuoc;
 use App\MauSac;
 use App\SanPham;
@@ -168,8 +169,9 @@ class SanPhamController extends Controller
         $sanpham=SanPham::getDetailProduct($id);
         $mausac=SanPham::getMauSac($sanpham[0]->tensanpham);
         $branch=TheLoai::all();
-        //dd($mausac);
-        return view('frontend.sanpham.detailProduct',['sanpham'=>$sanpham,'mausac'=>$mausac,'branch'=>$branch]);
+        $binhluan = BinhLuan::getBinhLuan($id);
+       // dd($binhluan);
+        return view('frontend.sanpham.detailProduct',['sanpham'=>$sanpham,'mausac'=>$mausac,'branch'=>$branch,'binhluan'=>$binhluan]);
     }
 
     /**

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\KhachHang;
 use App\NhanVien;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cookie;
 
 class LoginController extends Controller
 {
@@ -29,6 +30,11 @@ class LoginController extends Controller
         return view('admin.login');
     }
 
+    public function logout(){
+        Cookie::queue(Cookie::forget('name'));
+        Cookie::queue(Cookie::forget('pass'));
+        return view('admin.login');
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -42,6 +48,8 @@ class LoginController extends Controller
         foreach($nhanvien as $item){
             if($item->email==$request->email && $item->password==md5($request->password))
             {
+                Cookie::queue('pass',md5($request->password),3600);
+                Cookie::queue('name',$request->email,3600);
                 return view('admin.dashboard');
             }
         }

@@ -63,8 +63,8 @@
                                         <li><a href="javascript:void(0)">Hỏi đáp</a>
                                             
                                         </li>
-                                        <li><a href="contact-us.html">Liên hệ </a></li>
-                                        <li><a href="about-us.html">Thông tin</a></li>
+                                        <li><a href="javascript:void(0)">Liên hệ </a></li>
+                                        <li><a href="javascript:void(0)">Thông tin</a></li>
                                     </ul>
                                 <div class="input-group mb-3" style="width: 270px;margin-top: 11px;margin-right: 30px;">
                                     <form action="{{URL::to('frontend/timkiem') }}" class="form-inline" method="post">

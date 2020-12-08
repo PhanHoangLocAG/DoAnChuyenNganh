@@ -37,6 +37,12 @@ class ChiTietHoaDonController extends Controller
         return view('admin.donhang.hoadon',['hoadon'=>$hoadon]);
     }
     
+    public function listInvoiced()
+    {
+        $hoadon = HoaDon::getInvoiced();
+        //dd($hoadon);
+        return view('admin.donhang.hoadonthanhtoan',['hoadon'=>$hoadon]);
+    }
 
     public function create()
     {
@@ -131,9 +137,14 @@ class ChiTietHoaDonController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+    //Cho admin su dung
     public function edit($id)
     {
-        //
+        $hoadon = HoaDon::find($id);
+        $hoadon->thanhtoan = 0;
+        $hoadon->save();
+        return  redirect('admin/hoadon/danhsach')->with('thongbao','Cập nhật thành công');
     }
 
     /**
@@ -159,6 +170,7 @@ class ChiTietHoaDonController extends Controller
     public function destroy($id)
     {
         $hoadon = HoaDon::find($id);
+        //dd($hoadon);
         $a = strtotime($hoadon->created_at.' +12 hours');
         $time = time();
         $mahoadon = $hoadon->makhachhang;

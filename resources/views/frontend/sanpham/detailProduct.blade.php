@@ -156,8 +156,13 @@
                                 @endif
                                     >Thêm vào giỏ hàng</a></li>
                                 <!-- Bình luận sản phẩm -->
-                                <li><a class="qty-cart_btn" data-toggle="modal" data-target="#myModal1" 
-                                >Bình luận</a>
+                                <li>
+                                    @if(isset($_COOKIE['cmnd']))
+                                        <a class="qty-cart_btn" data-toggle="modal" data-target="#myModal1" >Bình luận</a>
+                                    @else
+                                        <a class="qty-cart_btn" href="frontend/dangnhap" >Bình luận</a>
+                                    @endif
+                                   
                                 </li>
                                 <!-- End bình luận -->
                                 <li><a class="qty-wishlist_btn"
@@ -176,6 +181,30 @@
         </div>
     </div>
 </div>
+@if(session('thongbao'))
+    <div class="alert alert-success">
+        {{session('thongbao')}}
+    </div>
+@endif
+@if(session('thongbaoloi'))
+    <div class="alert alert-danger">
+        {{session('thongbaoloi')}}
+    </div>
+@endif
+<hr>
+<!-- Binh luan của khách hàng -->
+<h4 style="color: blue;"> <strong> Bình luận của khách hàng đã mua </strong></h4>
+@if(isset($binhluan))
+    @if(count($binhluan)>0)
+        @foreach($binhluan as $item)
+            <p style="margin-bottom: 0px;margin-left: 5px;color:grey"><strong>{{$item->tenkhachhang}}</strong></p>
+            <div style="margin-left: 20px;max-width: 500px;"><?php echo $item->noidung ?></div>
+        @endforeach
+    @else
+    <p style="margin-bottom: 0px;margin-left: 5px;"><strong>Không có bình luận nào cho sản phẩm này</strong></p>
+    @endif
+
+@endif
 <!-- Bình luận sản phẩm -->
 <div id="myModal1" class="modal fade" role="dialog">
   <div class="modal-dialog">
@@ -187,7 +216,7 @@
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
       <div class="modal-body">
-      <form action="{{URL::to('frontend/sua/'.Cookie::get('cmnd'))}}" class="kenne-form" enctype="multipart/form-data" method="post">
+      <form action="{{ URL::to('frontend/binhluan/'.Cookie::get('cmnd').'/'.$sanpham[0]->masanpham ) }}" class="kenne-form" enctype="multipart/form-data" method="post">
         <input type="hidden" name="_token" value="{{csrf_token()}}">
         <div class="form-group">
             <label for="comment">Nội dung:</label>

@@ -7,7 +7,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1 class="page-header">Hóa đơn chưa thanh toán
+                        <h1 class="page-header">Hóa đơn đã thanh toán
                             <small>Danh sách</small>
                         </h1>
                     </div>
@@ -28,7 +28,6 @@
                                 <th>Ngày lập hóa đơn</th>
                                 <th>Thanh toán</th>
                                 <th>Thành tiền</th>
-                                <th>Edit</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -50,7 +49,6 @@
                                             @endif
                                         </td>
                                         <td>{{ number_format($item->thanhtien,0,'','.')." VNĐ" }}</td>
-                                        <td class="center"><i class="fa fa-pencil fa-fw"></i><a href="admin/hoadon/edit/{{$item->mahoadon}}">Cập nhật thanh toán rồi</a></td>
                                     </tr>
                                 @endforeach
                             @else

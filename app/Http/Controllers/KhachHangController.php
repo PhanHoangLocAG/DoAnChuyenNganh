@@ -187,6 +187,7 @@ class KhachHangController extends Controller
         $khachhang->delete();
         return redirect('admin/khachhang/danhsach')->with('thongbao', 'Xóa thành công một khách hàng');
     }
+    
     public function formdangnhap(){
         $branch=TheLoai::all();
         return view('frontend.customer.login',['branch'=>$branch]);
@@ -211,7 +212,7 @@ class KhachHangController extends Controller
                 return redirect()->action('SanPhamController@ShowProduct');
             }
         }
-        return redirect('frontend/dangnhap')->with('thongbao','Email hoặc Password sai');
+        return redirect('frontend/dangnhap')->with('thongbaoloi','Email hoặc Password sai');
     }
 
     public function dangxuat(){

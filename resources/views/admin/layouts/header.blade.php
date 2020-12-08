@@ -19,7 +19,7 @@
                     <ul class="dropdown-menu dropdown-user">
                         <li><a href="#"><i class="fa fa-user fa-fw"></i> Thông tin cá nhân</a>
                         </li>
-                        <li><a href="admin/login"><i class="fa fa-sign-out fa-fw"></i>Đăng xuất</a>
+                        <li><a href="admin/logout"><i class="fa fa-sign-out fa-fw"></i>Đăng xuất</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->

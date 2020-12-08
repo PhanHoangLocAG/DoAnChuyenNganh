@@ -54,7 +54,7 @@
                                 </div>
                                 <div class="product-content" style="padding: 0px;text-align: left;">
                                     <div class="product-desc_info">
-                                        <h3 class="product-name"><a href="single-product.html">{{$item->tensanpham}}</a></h3>
+                                        <h3 class="product-name"><a href="frontend/detailProduct/{{$item->masanpham}}">{{$item->tensanpham}}</a></h3>
                                         <div class="price-box">
                                             @if(isset($item->Money_discount))
                                             <span class="new-price">{{number_format($item->Money_discount,0,"",".")."VND"}}</span>

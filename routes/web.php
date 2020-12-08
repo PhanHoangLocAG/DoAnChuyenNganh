@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\BinhLuanController;
 use App\Http\Controllers\KhachHangController;
 use App\Http\Controllers\NhanVienController;
+use App\Http\Middleware\CheckLogin;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,116 +31,135 @@ Route::group(['prefix'=>'admin'],function(){
     
     Route::get('login','LoginController@create');
     Route::post('login','LoginController@store');
+    Route::get('logout','LoginController@logout');
     //Loại sản phẩm
     Route::group(['prefix'=>'theloai'],function(){
-        
-       Route::get('them','TheLoaiController@create');
-       Route::post('them','TheLoaiController@store');
-       Route::get('danhsach','TheLoaiController@index');
-       Route::get('xoa/{ma}','TheLoaiController@destroy');
-       Route::get('sua/{ma}','TheLoaiController@edit');
-       Route::post('sua/{ma}','TheLoaiController@update');
-
+        Route::middleware(['login'])->group(function () {
+            Route::get('them','TheLoaiController@create');
+            Route::post('them','TheLoaiController@store');
+            Route::get('danhsach','TheLoaiController@index');
+            Route::get('xoa/{ma}','TheLoaiController@destroy');
+            Route::get('sua/{ma}','TheLoaiController@edit');
+            Route::post('sua/{ma}','TheLoaiController@update');
+        });
     });
 
     //Nhan Vien
     Route::group(['prefix'=>'nhanvien'],function(){
-
-        Route::get('them','NhanVienController@create');
-        Route::post('them','NhanVienController@store');
-        Route::get('xoa/{ma}','NhanVienController@destroy');
-        Route::get('sua/{ma}','NhanVienController@edit');
-        Route::post('sua/{ma}','NhanVienController@update');
-        Route::get('danhsach','NhanVienController@index');
+        Route::middleware(['login'])->group(function () {
+            Route::get('them','NhanVienController@create');
+            Route::post('them','NhanVienController@store');
+            Route::get('xoa/{ma}','NhanVienController@destroy');
+            Route::get('sua/{ma}','NhanVienController@edit');
+            Route::post('sua/{ma}','NhanVienController@update');
+            Route::get('danhsach','NhanVienController@index');
+        });
     });
 
     //Sản phẩm
     Route::group(['prefix'=>'sanpham'],function(){
-        
-        Route::get('them','SanPhamController@create');
-        Route::post('them','SanPhamController@store');
-        Route::get('xoa/{ma}','SanPhamController@destroy');
-        Route::get('sua/{ma}','SanPhamController@edit');
-        Route::post('sua/{ma}','SanPhamController@update');
-        Route::get('danhsach','SanPhamController@index');
+        Route::middleware(['login'])->group(function () {
+            Route::get('them','SanPhamController@create');
+            Route::post('them','SanPhamController@store');
+            Route::get('xoa/{ma}','SanPhamController@destroy');
+            Route::get('sua/{ma}','SanPhamController@edit');
+            Route::post('sua/{ma}','SanPhamController@update');
+            Route::get('danhsach','SanPhamController@index');
+        });
 
     });
 
     //Giảm giá sản phẩm
     Route::group(['prefix'=>'sanpham'],function(){
-        
-        Route::get('discountlist','DiscountController@index');
-        Route::get('discount/{ma}','DiscountController@create');
-        Route::post('discount/{ma}','DiscountController@store');
-        Route::get('deleteDiscount/{ma}','DiscountController@destroy');
-        Route::get('editDiscount/{ma}','DiscountController@edit');
-        Route::post('editDiscount/{ma}','DiscountController@update');
+        Route::middleware(['login'])->group(function () {
+            Route::get('discountlist','DiscountController@index');
+            Route::get('discount/{ma}','DiscountController@create');
+            Route::post('discount/{ma}','DiscountController@store');
+            Route::get('deleteDiscount/{ma}','DiscountController@destroy');
+            Route::get('editDiscount/{ma}','DiscountController@edit');
+            Route::post('editDiscount/{ma}','DiscountController@update');
+        });
     });
 
 
     //khach hang
     Route::group(['prefix'=>'khachhang'],function(){
-        
-        Route::get('danhsach','KhachHangController@index');
-        Route::get('xoa/{ma}','KhachHangController@destroy');
+        Route::middleware(['login'])->group(function () {
+            Route::get('danhsach','KhachHangController@index');
+            Route::get('xoa/{ma}','KhachHangController@destroy');
+        });
     });
 
     //chuc vu
     Route::group(['prefix'=>'chucvu'],function(){
-        Route::get('them','ChucVuController@create');
-        Route::post('them','ChucVuController@store');
-        Route::get('xoa/{ma}','ChucVuController@destroy');
-        Route::get('sua/{ma}','ChucVuController@edit');
-        Route::post('sua/{ma}','ChucVuController@update');
-        Route::get('danhsach','ChucVuController@index');
+        Route::middleware(['login'])->group(function () {
+            Route::get('them','ChucVuController@create');
+            Route::post('them','ChucVuController@store');
+            Route::get('xoa/{ma}','ChucVuController@destroy');
+            Route::get('sua/{ma}','ChucVuController@edit');
+            Route::post('sua/{ma}','ChucVuController@update');
+            Route::get('danhsach','ChucVuController@index');
+        });
     });
 
     //luong
     Route::group(['prefix'=>'luong'],function(){
-        Route::get('them','LuongController@create');
-        Route::post('them','LuongController@store');
-        Route::get('xoa/{ma}','LuongController@destroy');
-        Route::get('sua/{ma}','LuongController@edit');
-        Route::post('sua/{ma}','LuongController@update');
-        Route::get('danhsach','LuongController@index');
+        Route::middleware(['login'])->group(function () {
+            Route::get('them','LuongController@create');
+            Route::post('them','LuongController@store');
+            Route::get('xoa/{ma}','LuongController@destroy');
+            Route::get('sua/{ma}','LuongController@edit');
+            Route::post('sua/{ma}','LuongController@update');
+            Route::get('danhsach','LuongController@index');
+        });
     });
 
     //kich thuoc
     Route::group(['prefix'=>'kichthuoc'],function(){
-        Route::get('them','KichThuocController@create');
-        Route::post('them','KichThuocController@store');
-        Route::get('xoa/{ma}','KichThuocController@destroy');
-        Route::get('sua/{ma}','KichThuocController@edit');
-        Route::post('sua/{ma}','KichThuocController@update');
-        Route::get('danhsach','KichThuocController@index');
+        Route::middleware(['login'])->group(function () {
+            Route::get('them','KichThuocController@create');
+            Route::post('them','KichThuocController@store');
+            Route::get('xoa/{ma}','KichThuocController@destroy');
+            Route::get('sua/{ma}','KichThuocController@edit');
+            Route::post('sua/{ma}','KichThuocController@update');
+            Route::get('danhsach','KichThuocController@index');
+        });
     });
 
 
     //Mau sac
     Route::group(['prefix'=>'mausac'],function(){
-        Route::get('them','MauSacController@create');
-        Route::post('them','MauSacController@store');
-        Route::get('xoa/{ma}','MauSacController@destroy');
-        Route::get('sua/{ma}','MauSacController@edit');
-        Route::post('sua/{ma}','MauSacController@update');
-        Route::get('danhsach','MauSacController@index');
+        Route::middleware(['login'])->group(function () {
+            Route::get('them','MauSacController@create');
+            Route::post('them','MauSacController@store');
+            Route::get('xoa/{ma}','MauSacController@destroy');
+            Route::get('sua/{ma}','MauSacController@edit');
+            Route::post('sua/{ma}','MauSacController@update');
+            Route::get('danhsach','MauSacController@index');
+        });
     });
 
 
     //Hinh
     Route::group(['prefix'=>'hinh'],function(){
-        Route::get('them','Controller@create');
-        Route::post('them','Controller@store');
-        Route::get('xoa/{ma}','Controller@destroy');
-        Route::get('sua/{ma}','Controller@edit');
-        Route::post('sua/{ma}','Controller@update');
-        Route::get('danhsach','Controller@index');
+        Route::middleware(['login'])->group(function () {
+            Route::get('them','Controller@create');
+            Route::post('them','Controller@store');
+            Route::get('xoa/{ma}','Controller@destroy');
+            Route::get('sua/{ma}','Controller@edit');
+            Route::post('sua/{ma}','Controller@update');
+            Route::get('danhsach','Controller@index');
+        });
     });
 
     //Hóa đơn
     Route::group(['prefix'=>'hoadon'],function(){
-        
-        Route::get('danhsach','ChiTietHoaDonController@listInvoice');
+
+        Route::middleware(['login'])->group(function () {
+            Route::get('danhsach','ChiTietHoaDonController@listInvoice');
+            Route::get('edit/{ma}','ChiTietHoaDonController@edit');
+            Route::get('danhsachthanhtoan','ChiTietHoaDonController@listInvoiced');
+        });
     });
 });
 
@@ -188,6 +209,9 @@ Route::group(['prefix'=>'frontend'],function(){
     Route::get('timkiemsanphammoi/{ten}','SanPhamController@searchNewProduct');
     Route::get('timkiemcaodenthap/{ten}','SanPhamController@searchPriceHightToLow');
     Route::get('timkiemthapdencao/{ten}','SanPhamController@searchPriceLowToHight');
+
+    //Binh luan
+    Route::post('binhluan/{makh}/{masanpham}','BinhLuanController@addComment');
 });
 
 Route::get('sentmail','MailController@basic_email');
