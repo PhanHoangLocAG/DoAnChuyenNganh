@@ -25,7 +25,7 @@
                                 </div>
                         @endif
                         <form action="{{URL::to('frontend/dangnhap')}}" enctype="multipart/form-data" method="post">
-                            <input type="hidden" name="_token" value="{{csrf_token()}}">
+                            @csrf
                         <div class="login-form">
                                 <h4 class="login-title">Đăng nhập</h4>
                                 <div class="row">

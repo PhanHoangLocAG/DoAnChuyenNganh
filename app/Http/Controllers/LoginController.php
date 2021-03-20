@@ -6,7 +6,7 @@ use App\KhachHang;
 use App\NhanVien;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
-
+use Illuminate\Support\Facades\Auth;
 class LoginController extends Controller
 {
     /**
@@ -43,17 +43,15 @@ class LoginController extends Controller
      */
     public function store(Request $request)//Dang nhap
     {
-        $nhanvien=NhanVien::getAccountAdmin();
-        //dd($nhanvien);
-        foreach($nhanvien as $item){
-            if($item->email==$request->email && $item->password==md5($request->password))
-            {
-                Cookie::queue('pass',md5($request->password),3600);
-                Cookie::queue('name',$request->email,3600);
-                return view('admin.dashboard');
-            }
+        try {
+            if(!isset($request->email) || !isset($request->password)) throw new \Exception("Nhập đầy đủ thông tin!");
+            $data = $request->only('email', 'password');
+            if (!Auth::attempt($data)) throw new \Exception("Tài khoản hoặc mật khẩu không chính xác!");
+            return view('admin.dashboard');
+            
+        } catch(\Exception $e) {
+            return redirect()->back()->with('thongbao',$e->getMessage());   
         }
-        return redirect('admin/login')->with('thongbao','Email hoặc password không chính xác');
     }
 
     /**

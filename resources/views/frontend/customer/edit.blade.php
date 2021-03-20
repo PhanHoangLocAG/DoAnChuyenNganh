@@ -124,7 +124,7 @@
       </div>
       <div class="modal-body">
       <form action="{{URL::to('frontend/sua/'.Cookie::get('cmnd'))}}" class="kenne-form" enctype="multipart/form-data" method="post">
-        <input type="hidden" name="_token" value="{{csrf_token()}}">
+        @csrf
         <div class="kenne-form-inner">
             <div class="single-input single-input-half" style="margin-top: 0px;">
                 <label >Họ và tên:</label>
