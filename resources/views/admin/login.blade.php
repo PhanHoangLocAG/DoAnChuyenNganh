@@ -40,7 +40,7 @@
                         @endif
                         <form role="form" action="{{URL::to('admin/login')}}" method="POST">
                             <fieldset>
-                                <input type="hidden" name="_token" value="{{csrf_token()}}">
+                                @csrf
                                 <div class="form-group">
                                     <input class="form-control" placeholder="E-mail" name="email" type="email" autofocus>
                                 </div>

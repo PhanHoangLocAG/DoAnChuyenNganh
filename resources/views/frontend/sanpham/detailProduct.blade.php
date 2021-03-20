@@ -217,7 +217,7 @@
       </div>
       <div class="modal-body">
       <form action="{{ URL::to('frontend/binhluan/'.Cookie::get('cmnd').'/'.$sanpham[0]->masanpham ) }}" class="kenne-form" enctype="multipart/form-data" method="post">
-        <input type="hidden" name="_token" value="{{csrf_token()}}">
+        @csrf
         <div class="form-group">
             <label for="comment">Nội dung:</label>
             <textarea class="form-control" rows="7" id="content" name="content"></textarea>
