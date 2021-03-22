@@ -5,6 +5,7 @@ use App\Http\Controllers\KhachHangController;
 use App\Http\Controllers\NhanVienController;
 use App\Http\Middleware\CheckLogin;
 use Illuminate\Support\Facades\Route;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,7 +29,9 @@ Route::get('login',function(){
 
 Route::group(['prefix'=>'admin'],function(){
 
-    
+    Route::get('/dashboard',function(){
+        return view('admin.dashboard');
+    });
     Route::get('login','LoginController@create');
     Route::post('login','LoginController@store');
     Route::get('logout','LoginController@logout');
@@ -165,7 +168,7 @@ Route::group(['prefix'=>'admin'],function(){
 
 
 Route::group(['prefix'=>'frontend'],function(){
-    
+
     //home
     Route::get('trangchu','SanPhamController@ShowProduct');
 
@@ -182,8 +185,8 @@ Route::group(['prefix'=>'frontend'],function(){
 
     //detail product
     Route::get('detailProduct/{ma}','SanPhamController@show');
-    
-    
+
+
     //gio hang
     Route::get('giohang','GioHangController@index');
     Route::get('add/{ma}','GioHangController@Addcart');

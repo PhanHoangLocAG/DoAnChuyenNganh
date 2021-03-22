@@ -6,7 +6,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">Admin Area - Hoang Loc</a>
+                <a class="navbar-brand" href="admin/dashboard">Admin Area - Hoang Loc</a>
             </div>
             <!-- /.navbar-header -->
 
@@ -17,7 +17,7 @@
                         <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
-                        <li><a href="#"><i class="fa fa-user fa-fw"></i> Thông tin cá nhân</a>
+                        <li><a href="admin/dashboard"><i class="fa fa-user fa-fw"></i> Thông tin cá nhân</a>
                         </li>
                         <li><a href="admin/logout"><i class="fa fa-sign-out fa-fw"></i>Đăng xuất</a>
                         </li>
@@ -30,6 +30,6 @@
 
             @include('admin.layouts.menu')
 
-            
+
             <!-- /.navbar-static-side -->
         </nav>
